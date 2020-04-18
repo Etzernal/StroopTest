@@ -16,6 +16,7 @@ import mk.ukim.finki.vvkn.stroopeffect.db.ResultsDao;
 import mk.ukim.finki.vvkn.stroopeffect.fragments.HomeFragment;
 import mk.ukim.finki.vvkn.stroopeffect.fragments.ResultsFragment;
 import mk.ukim.finki.vvkn.stroopeffect.fragments.SimulationFragment;
+import mk.ukim.finki.vvkn.stroopeffect.fragments.InstructionFragment;
 import mk.ukim.finki.vvkn.stroopeffect.models.Result;
 
 public class MainActivity extends AppCompatActivity {
@@ -72,7 +73,9 @@ public class MainActivity extends AppCompatActivity {
     public void initHomeFragment()
     {
         Fragment home = new HomeFragment();
+        // Begin fragment manager
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        // Adds homepage to main page
         transaction.add(R.id.container, home);
         transaction.commit();
     }
@@ -81,19 +84,37 @@ public class MainActivity extends AppCompatActivity {
     {
         Fragment home = new HomeFragment();
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        // Switch to homepage
         transaction.replace(R.id.container, home);
         transaction.commit();
     }
 
-    public void startSimulationFragment(String gender)
+    public void startInstructionFragment(String gender, String age)
     {
-        Fragment simulateTest = new SimulationFragment();
+        Fragment instructionFragment = new InstructionFragment();
 
         Bundle arguments = new Bundle();
+        arguments.putString(InstructionFragment.GENDER, gender);
+        arguments.putString(InstructionFragment.AGE, age);
+        instructionFragment.setArguments(arguments);
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        // Switch to instructions page
+        transaction.replace(R.id.container, instructionFragment);
+        transaction.show(instructionFragment);
+        transaction.commit();
+    }
+
+    public void startSimulationFragment(String gender, int simulationType)
+    {
+        Fragment simulateTest = new SimulationFragment();
+        Bundle arguments = new Bundle();
         arguments.putString(SimulationFragment.TESTER_GENDER, gender);
+        arguments.putInt(SimulationFragment.TRIALTYPE, simulationType);
         simulateTest.setArguments(arguments);
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        // Switch to quiz page
         transaction.replace(R.id.container, simulateTest);
         transaction.commit();
     }
@@ -105,6 +126,7 @@ public class MainActivity extends AppCompatActivity {
         Fragment resultsFragment = new ResultsFragment();
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.addToBackStack(null);
+        // Switch to results page
         transaction.replace(R.id.container, resultsFragment);
         transaction.commit();
     }

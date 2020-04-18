@@ -9,7 +9,7 @@
     <string name="home_fragment_radio_button_female">Female</string>
     <string name="home_fragment_button_start">Start the test</string>
     <string name="home_fragment_button_results">Show results</string>
-    <string name="home_fragment_text_view_instructions">In every simulation there is a circle. Your task is to tap the square which has the NAME of the colour of the circle.</string>
+    <string name="home_fragment_text_view_instructions">For every question, your task is to tap the square which has the NAME of the colour or word. Depending on the instructions given at the start of each trial.</string>
     <string name="home_fragment_text_view_instructions1">Keep your eyes open and your mind focused!</string>
 
     <string name="simulation_fragment_text_view_instructions">Click the name of the color of the circle</string>

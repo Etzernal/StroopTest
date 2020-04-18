@@ -1,149 +1,127 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background">
+    android:background="@android:color/background_light"
+    android:orientation="vertical">
 
     <TextView
+        android:id="@+id/simulation_fragment_text_view_instructions"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/simulation_fragment_text_view_instructions"
+        android:gravity="center_horizontal"
+        android:padding="20dp"
         android:text="@string/simulation_fragment_text_view_instructions"
         android:textSize="20sp"
-        android:textStyle="bold"
-        android:gravity="center_horizontal"
-        android:padding="20dp"/>
+        android:textStyle="bold" />
 
-    <com.makeramen.roundedimageview.RoundedImageView
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:id="@+id/simulation_fragment_image_view_circle"
-        android:layout_gravity="center_horizontal"
-        app:riv_corner_radius="50dp"/>
+    <TextView
+        android:id="@+id/simulation_fragment_text_view_question"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/text_view_default"
+        android:textColor="@color/white"
+        android:textSize="36sp"
+        android:textStyle="bold" />
 
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content">
 
         <RelativeLayout
+            android:id="@+id/simulation_fragment_relative_top"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
-            android:id="@+id/simulation_fragment_relative_top"
             android:padding="20dp">
 
             <FrameLayout
+                android:id="@+id/simulation_fragment_frame_option1"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/simulation_fragment_frame_option1">
+                android:layout_height="wrap_content">
 
                 <com.makeramen.roundedimageview.RoundedImageView
+                    android:id="@+id/simulation_fragment_image_view_option1_rounded"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
-                    android:id="@+id/simulation_fragment_image_view_option1_rounded"
                     android:layout_gravity="center_horizontal"
                     android:layout_margin="20dp"
-                    />
+                    app:riv_border_color="#000000"
+                    app:riv_border_width="0.5sp" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/simulation_fragment_text_view_option1"
-                    android:text="@string/text_view_default"
-                    android:layout_gravity="center"
-                    android:textSize="20sp"
-                    android:textColor="@color/white"
-                    android:textStyle="bold"/>
             </FrameLayout>
 
             <FrameLayout
+                android:id="@+id/simulation_fragment_frame_option2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/simulation_fragment_frame_option2"
                 android:layout_toRightOf="@id/simulation_fragment_frame_option1">
 
                 <com.makeramen.roundedimageview.RoundedImageView
+                    android:id="@+id/simulation_fragment_image_view_option2_rounded"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
-                    android:id="@+id/simulation_fragment_image_view_option2_rounded"
                     android:layout_gravity="center_horizontal"
                     android:layout_margin="20dp"
-                    />
+                    app:riv_border_color="#000000"
+                    app:riv_border_width="0.5sp" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/simulation_fragment_text_view_option2"
-                    android:text="@string/text_view_default"
-                    android:layout_gravity="center"
-                    android:textSize="20sp"
-                    android:textColor="@color/white"
-                    android:textStyle="bold"/>
             </FrameLayout>
 
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/simulation_fragment_relative_bottom"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:id="@+id/simulation_fragment_relative_bottom"
             android:layout_below="@id/simulation_fragment_relative_top"
+            android:gravity="center_horizontal"
             android:padding="20dp">
 
             <FrameLayout
+                android:id="@+id/simulation_fragment_frame_option3"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/simulation_fragment_frame_option3">
+                android:layout_height="wrap_content">
 
                 <com.makeramen.roundedimageview.RoundedImageView
+                    android:id="@+id/simulation_fragment_image_view_option3_rounded"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
-                    android:id="@+id/simulation_fragment_image_view_option3_rounded"
                     android:layout_gravity="center_horizontal"
                     android:layout_margin="20dp"
-                    />
+                    app:riv_border_color="#000000"
+                    app:riv_border_width="0.5sp" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/simulation_fragment_text_view_option3"
-                    android:text="@string/text_view_default"
-                    android:layout_gravity="center"
-                    android:textSize="20sp"
-                    android:textColor="@color/white"
-                    android:textStyle="bold"/>
             </FrameLayout>
 
             <FrameLayout
+                android:id="@+id/simulation_fragment_frame_option4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/simulation_fragment_frame_option4"
                 android:layout_toRightOf="@id/simulation_fragment_frame_option3">
 
                 <com.makeramen.roundedimageview.RoundedImageView
+                    android:id="@+id/simulation_fragment_image_view_option4_rounded"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
-                    android:id="@+id/simulation_fragment_image_view_option4_rounded"
                     android:layout_gravity="center_horizontal"
                     android:layout_margin="20dp"
-                    />
+                    app:riv_border_color="#000000"
+                    app:riv_border_width="0.5sp" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/simulation_fragment_text_view_option4"
-                    android:text="@string/text_view_default"
-                    android:layout_gravity="center"
-                    android:textSize="20sp"
-                    android:textColor="@color/white"
-                    android:textStyle="bold"/>
             </FrameLayout>
 
         </RelativeLayout>
 
     </RelativeLayout>
+
+    <com.makeramen.roundedimageview.RoundedImageView
+        android:id="@+id/simulation_fragment_image_view_circle"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center_horizontal"
+        app:riv_corner_radius="50dp" />
 
 </LinearLayout>

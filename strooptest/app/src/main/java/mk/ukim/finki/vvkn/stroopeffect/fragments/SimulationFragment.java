@@ -2,15 +2,25 @@ package mk.ukim.finki.vvkn.stroopeffect.fragments;
 
 import android.os.Bundle;
 import android.os.Handler;
+
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+
+import android.text.Html;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.graphics.Color;
 
 import com.makeramen.roundedimageview.RoundedImageView;
+
+import org.w3c.dom.Text;
 
 import java.util.Random;
 
@@ -21,28 +31,45 @@ import mk.ukim.finki.vvkn.stroopeffect.utilities.StopWatch;
 
 public class SimulationFragment extends Fragment {
     public static final String TESTER_GENDER = "male or female";
-    public static final int STROOP_EFFECT_CONGRUENT = 0;
-    public static final int STROOP_EFFECT_INCONGRUENT = 1;
-    public static final int MAX_SIMULATIONS = 9;
+    public static final String TRIALTYPE = "trialtype";
+    public static Result currentResult;
+    public static final int LETTERSNEUTRALWORD = 0;
+    public static final int LETTERSNEUTRALCOLOR = 1;
+    public static final int LETTERSCONGRUENT = 2;
+    public static final int LETTERSINCONGRUENT = 3;
+    public static final int EMOTIONNEUTRALWORD = 4;
+    public static final int EMOTIONNEUTRALCOLOR = 5;
+    public static final int EMOTIONCONGRUENT = 6;
+    public static final int EMOTIONINCONGRUENT= 7;
+    public static final int MAX_SIMULATIONS = 3;
     public static final int TOAST_DURATION = 300;
 
-    private static final int [] COLOR_BACKGROUNDS = { R.drawable.color_black, R.drawable.color_red, R.drawable.color_green,
-                                                        R.drawable.color_blue, R.drawable.color_yellow, R.drawable.color_pink,
-                                                        R.drawable.color_cyan};
 
-    private static final String [] COLOR_NAMES = { "Black", "Red", "Green", "Blue", "Yellow", "Pink", "Cyan" };
+    // Colors required - Red, Blue, Pink, Yellow.
+
+    private static final int blackBackground = R.drawable.color_black;
+    private static final String blackName = "Black";
+    private static final String BLACK_CODE = "#000000";
+
+    private static final String[] EMOTIONS = {"ANGER","SAD","HAPPY","LOVE"};
+    private static final String[] COLOR_CODE = {"#FF0000","#0000FF","#FFCC00","#FF00FF"};
+    private static final int [] COLOR_BACKGROUNDS = { R.drawable.color_red, R.drawable.color_blue,
+                                                        R.drawable.color_yellow, R.drawable.color_pink };
+
+    private static final String [] COLOR_NAMES = { "RED", "BLUE", "YELLOW", "PINK" };
 
     private int mSimulationType;
     private int mCurrentSimulationNumber;
     private int mTotalTries;
 
-    private final Result currentResult;
     private final StopWatch stopWatch;
     private final Random random;
 
+    private TextView textViewQuestion;
+    private TextView textViewInstruction;
+
     private RoundedImageView imgViewCircle;
     private RoundedImageView[] imgViewsArray;
-    private TextView[] txtViewsArray;
 
     private Toast errorToast;
 
@@ -50,9 +77,6 @@ public class SimulationFragment extends Fragment {
 
     public SimulationFragment() {
         imgViewsArray = new RoundedImageView[4];
-        txtViewsArray = new TextView[4];
-
-        currentResult = new Result();
         stopWatch = new StopWatch();
         random = new Random();
     }
@@ -62,12 +86,9 @@ public class SimulationFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_simulation, container, false);
         initializeWidgets(view);
-
-        mSimulationType = STROOP_EFFECT_CONGRUENT;
         mCurrentSimulationNumber = 0;
         mTotalTries = 0;
-
-        currentResult.setGender(getArguments().getString(TESTER_GENDER));
+        mSimulationType = getArguments().getInt(TRIALTYPE);
 
         stopWatch.start();
 
@@ -89,6 +110,8 @@ public class SimulationFragment extends Fragment {
 
     private void initializeWidgets(View view)
     {
+        textViewQuestion = (TextView) view.findViewById(R.id.simulation_fragment_text_view_question);
+        textViewInstruction = (TextView) view.findViewById(R.id.simulation_fragment_text_view_instructions);
         imgViewCircle = (RoundedImageView) view.findViewById(R.id.simulation_fragment_image_view_circle);
 
         imgViewsArray[0] = (RoundedImageView)view.findViewById(R.id.simulation_fragment_image_view_option1_rounded);
@@ -97,13 +120,8 @@ public class SimulationFragment extends Fragment {
         imgViewsArray[3] = (RoundedImageView)view.findViewById(R.id.simulation_fragment_image_view_option4_rounded);
         for(RoundedImageView roundedImageView : imgViewsArray)
         {
-            roundedImageView.setCornerRadius((float)20);
+            roundedImageView.setCornerRadius((float)10);
         }
-
-        txtViewsArray[0] = (TextView)view.findViewById(R.id.simulation_fragment_text_view_option1);
-        txtViewsArray[1] = (TextView)view.findViewById(R.id.simulation_fragment_text_view_option2);
-        txtViewsArray[2] = (TextView)view.findViewById(R.id.simulation_fragment_text_view_option3);
-        txtViewsArray[3] = (TextView)view.findViewById(R.id.simulation_fragment_text_view_option4);
 
         View toastView = getActivity().getLayoutInflater().inflate(R.layout.toast_error, null);
         errorToast = new Toast(getActivity().getApplicationContext());
@@ -121,21 +139,25 @@ public class SimulationFragment extends Fragment {
             if (mCurrentSimulationNumber == MAX_SIMULATIONS)
             {
                 long elapsedTime = stopWatch.getElapsedMilliseconds();
-                currentResult.setElapsedTime(mSimulationType, elapsedTime);
+                System.out.println(String.format("Simulation Type: %d", mSimulationType));
+                System.out.println(String.format("Time: %d",elapsedTime));
+                currentResult.setElapsedTime(mSimulationType, elapsedTime/ MAX_SIMULATIONS);
                 currentResult.setErrorPercentage(mSimulationType, 1 - 1.0 * MAX_SIMULATIONS / mTotalTries);
                 stopWatch.restart();
-
-                if (mSimulationType == STROOP_EFFECT_INCONGRUENT) {
+                // Change simulation type
+                //mSimulationType++;
+                if (mSimulationType == EMOTIONINCONGRUENT) {
                     String message = "Thanks for participating.";
+                    mSimulationType = LETTERSNEUTRALWORD;
+                    InstructionFragment.mSimulationType = LETTERSNEUTRALWORD-1;
                     Toast.makeText(getActivity().getApplicationContext(), message, Toast.LENGTH_LONG).show();
                     ((MainActivity)getActivity()).insertResultIntoDatabase(currentResult);
                     ((MainActivity)getActivity()).startHomeFragment();
                 }
-
-                mSimulationType++;
-
-                mCurrentSimulationNumber = 0;
-                mTotalTries = 0;
+                else {
+                    System.out.println(mSimulationType);
+                    ((MainActivity)getActivity()).startInstructionFragment(InstructionFragment.gender,InstructionFragment.age);
+                }
             }
             simulate(mSimulationType);
         }
@@ -152,120 +174,150 @@ public class SimulationFragment extends Fragment {
         }
     }
 
+    // Selection of the options.
     private void simulate(int type)
     {
+        // Randomly select color
         int correctColorId = random.nextInt(COLOR_BACKGROUNDS.length);
-        int [] otherColorsIds = generateOtherRandomNumbers(correctColorId);
-        int correctAnswerIndex = random.nextInt(imgViewsArray.length);
-        mCorrectAnswer = correctAnswerIndex;
+        mCorrectAnswer = correctColorId;
 
-        if (type == STROOP_EFFECT_CONGRUENT) {
-            setWidgetsCongruent(otherColorsIds, correctAnswerIndex, correctColorId);
+        if (type == LETTERSNEUTRALWORD) {
+            textViewInstruction.setText("Select the color that corresponds to the word!");
+            textViewQuestion.setTextColor(Color.parseColor(BLACK_CODE));
+            setWidgetsLettersNeutralWord(correctColorId);
+            setWidgetOptions();
         }
-        else if (type == STROOP_EFFECT_INCONGRUENT)
+        else if (type == LETTERSNEUTRALCOLOR)
         {
-            setWidgetsIncongruent(otherColorsIds, correctAnswerIndex, correctColorId);
+            textViewInstruction.setText("Select the color that corresponds to the color!");
+            textViewQuestion.setTextColor(Color.parseColor(BLACK_CODE));
+            setWidgetsLettersNeutralColor(correctColorId);
+            setWidgetOptions();;
+        }
+        else if (type == LETTERSCONGRUENT)
+        {
+            textViewInstruction.setText("Select the color that corresponds to the color!");
+            textViewQuestion.setTextColor(Color.parseColor(BLACK_CODE));
+            setWidgetsLettersCongruent(correctColorId);
+            setWidgetOptions();;
+        }
+        else if (type == LETTERSINCONGRUENT)
+        {
+            textViewInstruction.setText("Select the color that corresponds to the color!");
+            textViewQuestion.setTextColor(Color.parseColor(BLACK_CODE));
+            setWidgetsLettersIncongruent(correctColorId);
+            setWidgetOptions();;
+        }
+        else if (type == EMOTIONNEUTRALWORD)
+        {
+            textViewInstruction.setText("Select the color that corresponds to the emotion!");
+            textViewQuestion.setTextColor(Color.parseColor(BLACK_CODE));
+            setWidgetsEmotionNeutralWord(correctColorId);
+            setWidgetOptions();;
+        }
+        else if (type == EMOTIONNEUTRALCOLOR)
+        {
+            textViewInstruction.setText("Select the color that corresponds to the word color!");
+            textViewQuestion.setTextColor(Color.parseColor(BLACK_CODE));
+            setWidgetsEmotionNeutralColor(correctColorId);
+            setWidgetOptions();;
+        }
+        else if (type == EMOTIONCONGRUENT)
+        {
+            textViewInstruction.setText("Select the color that corresponds to the word color!");
+            textViewQuestion.setTextColor(Color.parseColor(BLACK_CODE));
+            setWidgetsEmotionCongruent(correctColorId);
+            setWidgetOptions();;
+        }
+        else if (type == EMOTIONINCONGRUENT)
+        {
+            textViewInstruction.setText("Select the color that corresponds to the word color!");
+            textViewQuestion.setTextColor(Color.parseColor(BLACK_CODE));
+            setWidgetsEmotionIncongruent(correctColorId);
+            setWidgetOptions();;
         }
     }
 
-    private void setWidgetsCongruent(int[] otherColorsIds, int correctAnswerIndex, int correctColorId)
-    {
-        imgViewCircle.setImageDrawable(getResources().getDrawable(COLOR_BACKGROUNDS[correctColorId]));
-
-        for (int i = 0, j = 0; i < imgViewsArray.length; ++i)
-        {
-            if (i == correctAnswerIndex)
-            {
-                imgViewsArray[i].setImageDrawable(getResources().getDrawable(COLOR_BACKGROUNDS[correctColorId]));
-                txtViewsArray[i].setText(COLOR_NAMES[correctColorId]);
-            }
-            else
-            {
-                imgViewsArray[i].setImageDrawable(getResources().getDrawable(COLOR_BACKGROUNDS[otherColorsIds[j]]));
-                txtViewsArray[i].setText(COLOR_NAMES[otherColorsIds[j++]]);
-            }
-        }
+    private void setWidgetOptions(){
+        // Options are set here
+        imgViewsArray[0].setImageDrawable(getResources().getDrawable(COLOR_BACKGROUNDS[0]));
+        imgViewsArray[1].setImageDrawable(getResources().getDrawable(COLOR_BACKGROUNDS[1]));
+        imgViewsArray[2].setImageDrawable(getResources().getDrawable(COLOR_BACKGROUNDS[2]));
+        imgViewsArray[3].setImageDrawable(getResources().getDrawable(COLOR_BACKGROUNDS[3]));
     }
 
-    private void setWidgetsIncongruent(int[] otherColorIds, int correctImageViewIndex, int correctColorId)
-    {
-        imgViewCircle.setImageDrawable(getResources().getDrawable(COLOR_BACKGROUNDS[correctColorId]));
-
-        int imgViewIndexForCorrectColor = random.nextInt(imgViewsArray.length);
-        while (imgViewIndexForCorrectColor == correctImageViewIndex)
-        {
-            imgViewIndexForCorrectColor = random.nextInt(imgViewsArray.length);
-        }
-
-        int[] txtIds = randomizeValues(otherColorIds);
-
-        for (int i = 0, txtIndex = 0, imageIndex = 0; i < imgViewsArray.length; ++i)
-        {
-            if (i == correctImageViewIndex)
-            {
-                imgViewsArray[i].setImageDrawable(getResources().getDrawable(COLOR_BACKGROUNDS[otherColorIds[imageIndex++]]));
-                txtViewsArray[i].setText(COLOR_NAMES[correctColorId]);
-            }
-            else
-            {
-                if (i == imgViewIndexForCorrectColor)
-                {
-                    imgViewsArray[i].setImageDrawable(getResources().getDrawable(COLOR_BACKGROUNDS[correctColorId]));
-                }
-                else
-                {
-                    imgViewsArray[i].setImageDrawable(getResources().getDrawable(COLOR_BACKGROUNDS[otherColorIds[imageIndex++]]));
-                }
-                txtViewsArray[i].setText(COLOR_NAMES[txtIds[txtIndex++]]);
-            }
-        }
+    private void setWidgetsLettersNeutralWord(int correctColorId){
+        // RANDOM COLOR in black color. i.e. Word Blue in black color - test reading of word
+        textViewQuestion.setText(COLOR_NAMES[correctColorId]);
     }
 
-    private int[] generateOtherRandomNumbers(int correctColorId)
-    {
-        int [] colorIds = new int[imgViewsArray.length - 1];
-        for (int i = 0; i < colorIds.length; ++i)
-        {
-            colorIds[i] = -1;
-        }
+    private void setWidgetsLettersNeutralColor(int correctColorId){
+        // ASTERICKS in same color. i.e. Word **** in blue color - test reading of color
+        textViewQuestion.setText("****");
+        textViewQuestion.setTextColor(Color.parseColor(COLOR_CODE[correctColorId]));
 
-        while (colorIds[0] == -1 || colorIds[0] == correctColorId)
-        {
-            colorIds[0] = random.nextInt(COLOR_BACKGROUNDS.length);
-        }
-
-        while (colorIds[1] == -1 || colorIds[1] == colorIds[0] || colorIds[1] == correctColorId)
-        {
-            colorIds[1] = random.nextInt(COLOR_BACKGROUNDS.length);
-        }
-
-        while (colorIds[2] == -1 || colorIds[2] == colorIds[0] || colorIds[2] == colorIds[1] || colorIds[2] == correctColorId)
-        {
-            colorIds[2] = random.nextInt(COLOR_BACKGROUNDS.length);
-        }
-        return colorIds;
     }
 
-    private int[] randomizeValues(int [] otherValues)
-    {
-        int[] newValues = new int[otherValues.length];
-
-        int firstIndex, secondIndex = -1, thirdIndex = -1;
-        firstIndex = random.nextInt(otherValues.length);
-        while (secondIndex == -1 || secondIndex == firstIndex)
-        {
-            secondIndex = random.nextInt(otherValues.length);
+    private void setWidgetsLettersCongruent(int correctColorId){
+        // RANDOM COLOR in same color. i.e. Word Blue in blue color for first and last character
+        char[] newText = COLOR_NAMES[correctColorId].toCharArray();
+        String newString = "";
+        for (int i=0; i<newText.length;i++){
+            if (i == 0 | i == newText.length-1){
+                newString += "<font color=" + COLOR_CODE[correctColorId] + ">" + String.valueOf(newText[i]) + "</font>";
+            }
+            else {
+                newString += newText[i];
+            }
         }
-        while (thirdIndex == -1 || thirdIndex == secondIndex || thirdIndex == firstIndex)
-        {
-            thirdIndex = random.nextInt(otherValues.length);
+        textViewQuestion.setText(Html.fromHtml(newString));
+
+    }
+
+    private void setWidgetsLettersIncongruent(int correctColorId){
+        // RANDOM COLOR in different color. i.e. Word Blue, First and last letter is not blue, the remaining colors are blue.
+        int mismatchWord = random.nextInt(4);
+        while (mismatchWord == correctColorId){
+            mismatchWord = random.nextInt(4);
         }
+        char[] newText = COLOR_NAMES[mismatchWord].toCharArray();
+        String newString = "";
+        for (int i=0; i<newText.length;i++){
+            if (i == 0 | i == newText.length-1){
+                newString += "<font color=" + COLOR_CODE[correctColorId] + ">" + String.valueOf(newText[i]) + "</font>";
+            }
+            else {
+                newString += newText[i];
+            }
+        }
+        textViewQuestion.setText(Html.fromHtml(newString));
+    }
 
-        newValues[0] = otherValues[firstIndex];
-        newValues[1] = otherValues[secondIndex];
-        newValues[2] = otherValues[thirdIndex];
+    private void setWidgetsEmotionNeutralWord(int correctColorId){
+        // RANDOM COLOR in same color. i.e. Word Anger in Black color.
+        textViewQuestion.setText(EMOTIONS[correctColorId]);
+    }
 
-        return newValues;
+    private void setWidgetsEmotionNeutralColor(int correctColorId){
+        // RANDOM COLOR in same color. i.e. Word **** in blue color
+        textViewQuestion.setText("****");
+        textViewQuestion.setTextColor(Color.parseColor(COLOR_CODE[correctColorId]));
+    }
+
+    private void setWidgetsEmotionCongruent(int correctColorId){
+        // RANDOM COLOR in same color. i.e. Word Anger in red color
+        textViewQuestion.setText(EMOTIONS[correctColorId]);
+        textViewQuestion.setTextColor(Color.parseColor(COLOR_CODE[correctColorId]));
+    }
+
+    private void setWidgetsEmotionIncongruent(int correctColorId){
+        // RANDOM COLOR in same color. i.e. Word Anger in blue color
+        int mismatchWord = random.nextInt(4);
+        while (mismatchWord == correctColorId){
+            mismatchWord = random.nextInt(4);
+        }
+        textViewQuestion.setText(EMOTIONS[mismatchWord]);
+        textViewQuestion.setTextColor(Color.parseColor(COLOR_CODE[correctColorId]));
     }
 
     @Override

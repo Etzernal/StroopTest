@@ -1,97 +1,138 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity"
-    android:background="@drawable/background">
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context=".MainActivity">
 
     <TextView
+        android:id="@+id/home_fragment_text"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/home_fragment_text"
+        android:gravity="center_horizontal"
         android:padding="20dp"
         android:text="@string/home_fragment_text_view_introduction"
-        android:textStyle="bold"
-        android:textSize="20sp"
         android:textColor="@color/dark_red"
-        android:gravity="center_horizontal"/>
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
     <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/home_fragment_text"
         android:id="@+id/home_fragment_radio_buttons_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/home_fragment_text"
         android:orientation="vertical"
         android:padding="20dp">
+
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="@string/home_fragment_text_view_choose"
+            android:gravity="center_horizontal"
             android:padding="10dp"
-            android:textSize="18sp"
+            android:text="@string/home_fragment_text_view_choose"
             android:textColor="@color/dark_red"
-            android:gravity="center_horizontal"/>
+            android:textSize="18sp" />
+
         <RadioGroup
+            android:id="@+id/ageInput"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <EditText
+                    android:id="@+id/age"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:gravity="center_horizontal"
+                    android:hint="Insert age here"
+                    android:inputType="number"
+                    android:text="" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+        </RadioGroup>
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:padding="10dp"
+            android:text="@string/home_fragment_text_view_choose"
+            android:textColor="@color/dark_red"
+            android:textSize="18sp" />
+
+        <RadioGroup
             android:id="@+id/home_fragment_radio_buttons_group"
-            android:orientation="horizontal"
-            android:gravity="center_horizontal">
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/home_fragment_radio_button_male"
-                android:text="@string/home_fragment_radio_button_male"
-                android:layout_marginRight="50dp"
-                android:tag="m"/>
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
 
             <RadioButton
+                android:id="@+id/home_fragment_radio_button_male"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="50dp"
+                android:tag="m"
+                android:text="@string/home_fragment_radio_button_male" />
+
+            <RadioButton
                 android:id="@+id/home_fragment_radio_button_female"
-                android:text="@string/home_fragment_radio_button_female"
-                android:tag="f"/>
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:tag="f"
+                android:text="@string/home_fragment_radio_button_female" />
+
         </RadioGroup>
+
+        <TextView
+            android:id="@+id/home_fragment_text_view_instructions"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:padding="20dp"
+            android:text="@string/home_fragment_text_view_instructions"
+            android:textColor="@color/dark_red"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/home_fragment_text_view_instructions1"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="87dp"
+            android:gravity="center_horizontal"
+            android:padding="20dp"
+            android:text="@string/home_fragment_text_view_instructions1"
+            android:textColor="@color/dark_red"
+            android:textSize="18sp" />
 
     </LinearLayout>
 
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/home_fragment_text_view_instructions"
-        android:layout_below="@id/home_fragment_radio_buttons_container"
-        android:text="@string/home_fragment_text_view_instructions"
-        android:padding="20dp"
-        android:textSize="18sp"
-        android:textColor="@color/dark_red"
-        android:gravity="center_horizontal"/>
-
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/home_fragment_text_view_instructions1"
-        android:layout_below="@id/home_fragment_text_view_instructions"
-        android:text="@string/home_fragment_text_view_instructions1"
-        android:padding="20dp"
-        android:textSize="18sp"
-        android:textColor="@color/dark_red"
-        android:gravity="center_horizontal"/>
-
     <Button
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
         android:id="@+id/home_fragment_button_show_results"
-        android:text="@string/home_fragment_button_results"
-        android:layout_alignParentBottom="true"
-        android:enabled="true"/>
-
-    <Button
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:enabled="true"
+        android:text="@string/home_fragment_button_results" />
+
+    <Button
         android:id="@+id/home_fragment_button_start_test"
-        android:text="@string/home_fragment_button_start"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
         android:layout_above="@id/home_fragment_button_show_results"
-        android:enabled="false"/>
+        android:enabled="false"
+        android:text="@string/home_fragment_button_start" />
 
 </RelativeLayout>

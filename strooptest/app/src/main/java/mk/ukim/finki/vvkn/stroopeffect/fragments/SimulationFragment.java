@@ -41,7 +41,7 @@ public class SimulationFragment extends Fragment {
     public static final int EMOTIONNEUTRALCOLOR = 5;
     public static final int EMOTIONCONGRUENT = 6;
     public static final int EMOTIONINCONGRUENT= 7;
-    public static final int MAX_SIMULATIONS = 3;
+    public static final int MAX_SIMULATIONS = 15;
     public static final int TOAST_DURATION = 300;
 
 
@@ -142,7 +142,7 @@ public class SimulationFragment extends Fragment {
                 System.out.println(String.format("Simulation Type: %d", mSimulationType));
                 System.out.println(String.format("Time: %d",elapsedTime));
                 currentResult.setElapsedTime(mSimulationType, elapsedTime/ MAX_SIMULATIONS);
-                currentResult.setErrorPercentage(mSimulationType, 1 - 1.0 * MAX_SIMULATIONS / mTotalTries);
+                currentResult.setErrorPercentage(mSimulationType, 100 - 100 * MAX_SIMULATIONS / mTotalTries);
                 stopWatch.restart();
                 // Change simulation type
                 //mSimulationType++;

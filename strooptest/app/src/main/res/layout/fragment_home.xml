@@ -33,7 +33,7 @@
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             android:padding="10dp"
-            android:text="@string/home_fragment_text_view_choose"
+            android:text="Input your age"
             android:textColor="@color/dark_red"
             android:textSize="18sp" />
 

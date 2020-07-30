@@ -30,18 +30,22 @@ import mk.ukim.finki.vvkn.stroopeffect.models.Result;
 import mk.ukim.finki.vvkn.stroopeffect.utilities.StopWatch;
 
 public class SimulationFragment extends Fragment {
-    public static final String TESTER_GENDER = "male or female";
-    public static final String TRIALTYPE = "trialtype";
+    public static final String GENDER = "male or female";
+    public static final String MODE = "mode";
     public static Result currentResult;
-    public static final int LETTERSNEUTRALWORD = 0;
-    public static final int LETTERSNEUTRALCOLOR = 1;
-    public static final int LETTERSCONGRUENT = 2;
-    public static final int LETTERSINCONGRUENT = 3;
-    public static final int EMOTIONNEUTRALWORD = 4;
-    public static final int EMOTIONNEUTRALCOLOR = 5;
-    public static final int EMOTIONCONGRUENT = 6;
-    public static final int EMOTIONINCONGRUENT= 7;
-    public static final int MAX_SIMULATIONS = 15;
+
+    public static final int TRIALDURATION = 4000;
+
+//    public static final int LETTERSNEUTRALWORD = 0;
+//    public static final int LETTERSNEUTRALCOLOR = 1;
+//    public static final int LETTERSCONGRUENT = 2;
+//    public static final int LETTERSINCONGRUENT = 3;
+//    public static final int EMOTIONNEUTRALWORD = 4;
+//    public static final int EMOTIONNEUTRALCOLOR = 5;
+//    public static final int EMOTIONCONGRUENT = 6;
+//    public static final int EMOTIONINCONGRUENT= 7;
+
+    public static final int MAX_TRIALS = 16;
     public static final int TOAST_DURATION = 300;
 
 
@@ -58,9 +62,9 @@ public class SimulationFragment extends Fragment {
 
     private static final String [] COLOR_NAMES = { "RED", "BLUE", "YELLOW", "PINK" };
 
-    private int mSimulationType;
-    private int mCurrentSimulationNumber;
-    private int mTotalTries;
+    private String mSimulationType;
+    private int mCurrentTrials;
+    private int mCorrectTrials;
 
     private final StopWatch stopWatch;
     private final Random random;
@@ -75,6 +79,7 @@ public class SimulationFragment extends Fragment {
 
     private int mCorrectAnswer;
 
+
     public SimulationFragment() {
         imgViewsArray = new RoundedImageView[4];
         stopWatch = new StopWatch();
@@ -86,9 +91,9 @@ public class SimulationFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_simulation, container, false);
         initializeWidgets(view);
-        mCurrentSimulationNumber = 0;
-        mTotalTries = 0;
-        mSimulationType = getArguments().getInt(TRIALTYPE);
+        mCurrentTrials = 0;
+        mCorrectTrials = 0;
+        mSimulationType = getArguments().getString(MODE);
 
         stopWatch.start();
 
@@ -131,25 +136,24 @@ public class SimulationFragment extends Fragment {
 
     private void processClick(int optionClicked)
     {
-        mTotalTries++;
-
+        mCurrentTrials++;
         if (mCorrectAnswer == optionClicked) {
-            mCurrentSimulationNumber++;
 
-            if (mCurrentSimulationNumber == MAX_SIMULATIONS)
+
+            if (mCurrentTrials == MAX_TRIALS)
             {
                 long elapsedTime = stopWatch.getElapsedMilliseconds();
                 System.out.println(String.format("Simulation Type: %d", mSimulationType));
                 System.out.println(String.format("Time: %d",elapsedTime));
-                currentResult.setElapsedTime(mSimulationType, elapsedTime/ MAX_SIMULATIONS);
-                currentResult.setErrorPercentage(mSimulationType, 100 - 100 * MAX_SIMULATIONS / mTotalTries);
+                currentResult.setElapsedTime(mSimulationType, elapsedTime/ MAX_TRIALS);
+                currentResult.setErrorPercentage(mSimulationType, 100 - 100 * MAX_TRIALS / mCorrectTrials);
                 stopWatch.restart();
                 // Change simulation type
                 //mSimulationType++;
-                if (mSimulationType == EMOTIONINCONGRUENT) {
+                if (mSimulationType == "" + MainActivity.MODES[9][0] + MainActivity.MODES[9][1] + MainActivity.MODES[9][2]) {
                     String message = "Thanks for participating.";
-                    mSimulationType = LETTERSNEUTRALWORD;
-                    InstructionFragment.mSimulationType = LETTERSNEUTRALWORD-1;
+                    mSimulationType = "000";
+                    InstructionFragment.inst_mode = "000";
                     Toast.makeText(getActivity().getApplicationContext(), message, Toast.LENGTH_LONG).show();
                     ((MainActivity)getActivity()).insertResultIntoDatabase(currentResult);
                     ((MainActivity)getActivity()).startHomeFragment();
@@ -175,62 +179,67 @@ public class SimulationFragment extends Fragment {
     }
 
     // Selection of the options.
-    private void simulate(int type)
+    private void simulate(String mode)
     {
         // Randomly select color
         int correctColorId = random.nextInt(COLOR_BACKGROUNDS.length);
         mCorrectAnswer = correctColorId;
 
-        if (type == LETTERSNEUTRALWORD) {
-            textViewInstruction.setText("Select the color that corresponds to the word!");
+        if (mode == "" + MainActivity.MODES[0][0] + MainActivity.MODES[0][1] + MainActivity.MODES[0][2] ) {
+        textViewInstruction.setText("Select the color that corresponds to the word!");
             textViewQuestion.setTextColor(Color.parseColor(BLACK_CODE));
             setWidgetsLettersNeutralWord(correctColorId);
             setWidgetOptions();
         }
-        else if (type == LETTERSNEUTRALCOLOR)
-        {
+        else if (mode == "" + MainActivity.MODES[1][0] + MainActivity.MODES[1][1] + MainActivity.MODES[1][2] ) {
             textViewInstruction.setText("Select the color that corresponds to the color!");
             textViewQuestion.setTextColor(Color.parseColor(BLACK_CODE));
             setWidgetsLettersNeutralColor(correctColorId);
             setWidgetOptions();;
         }
-        else if (type == LETTERSCONGRUENT)
-        {
+        else if (mode == "" + MainActivity.MODES[2][0] + MainActivity.MODES[2][1] + MainActivity.MODES[2][2] ) {
             textViewInstruction.setText("Select the color that corresponds to the color!");
             textViewQuestion.setTextColor(Color.parseColor(BLACK_CODE));
             setWidgetsLettersCongruent(correctColorId);
             setWidgetOptions();;
         }
-        else if (type == LETTERSINCONGRUENT)
-        {
+        else if (mode == "" + MainActivity.MODES[3][0] + MainActivity.MODES[3][1] + MainActivity.MODES[3][2] ) {
             textViewInstruction.setText("Select the color that corresponds to the color!");
             textViewQuestion.setTextColor(Color.parseColor(BLACK_CODE));
             setWidgetsLettersIncongruent(correctColorId);
             setWidgetOptions();;
         }
-        else if (type == EMOTIONNEUTRALWORD)
-        {
+        else if (mode == "" + MainActivity.MODES[4][0] + MainActivity.MODES[4][1] + MainActivity.MODES[4][2] ) {
             textViewInstruction.setText("Select the color that corresponds to the emotion!");
             textViewQuestion.setTextColor(Color.parseColor(BLACK_CODE));
             setWidgetsEmotionNeutralWord(correctColorId);
             setWidgetOptions();;
         }
-        else if (type == EMOTIONNEUTRALCOLOR)
-        {
+        else if (mode == "" + MainActivity.MODES[5][0] + MainActivity.MODES[5][1] + MainActivity.MODES[5][2] ) {
             textViewInstruction.setText("Select the color that corresponds to the word color!");
             textViewQuestion.setTextColor(Color.parseColor(BLACK_CODE));
             setWidgetsEmotionNeutralColor(correctColorId);
             setWidgetOptions();;
         }
-        else if (type == EMOTIONCONGRUENT)
-        {
+        else if (mode == "" + MainActivity.MODES[6][0] + MainActivity.MODES[6][1] + MainActivity.MODES[6][2] ) {
             textViewInstruction.setText("Select the color that corresponds to the word color!");
             textViewQuestion.setTextColor(Color.parseColor(BLACK_CODE));
             setWidgetsEmotionCongruent(correctColorId);
             setWidgetOptions();;
         }
-        else if (type == EMOTIONINCONGRUENT)
-        {
+        else if (mode == "" + MainActivity.MODES[7][0] + MainActivity.MODES[7][1] + MainActivity.MODES[7][2] ) {
+            textViewInstruction.setText("Select the color that corresponds to the word color!");
+            textViewQuestion.setTextColor(Color.parseColor(BLACK_CODE));
+            setWidgetsEmotionIncongruent(correctColorId);
+            setWidgetOptions();;
+        }
+        else if (mode == "" + MainActivity.MODES[8][0] + MainActivity.MODES[8][1] + MainActivity.MODES[8][2] ) {
+            textViewInstruction.setText("Select the color that corresponds to the word color!");
+            textViewQuestion.setTextColor(Color.parseColor(BLACK_CODE));
+            setWidgetsEmotionIncongruent(correctColorId);
+            setWidgetOptions();;
+        }
+        else if (mode == "" + MainActivity.MODES[9][0] + MainActivity.MODES[9][1] + MainActivity.MODES[9][2] ) {
             textViewInstruction.setText("Select the color that corresponds to the word color!");
             textViewQuestion.setTextColor(Color.parseColor(BLACK_CODE));
             setWidgetsEmotionIncongruent(correctColorId);

@@ -5,18 +5,18 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 public class ResultsDbOpenHelper extends SQLiteOpenHelper {
-    public static final String COLUMN_ID = "_id";
-    public static final String COLUMN_GENDER = "gender";
-    public static final String COLUMN_AGE = "age";
-    public static final String COLUMN_ERROR_LETTERSCONGRUENT = "errorLettersCongruent";
-    public static final String COLUMN_ERROR_LETTERSINCONGRUENT = "errorLettersIncongruent";
-    public static final String COLUMN_ELAPSED_TIME_LETTERSCONGRUENT = "elapsedTimeLettersCongruent";
-    public static final String COLUMN_ELAPSED_TIME_LETTERSINCONGRUENT = "elapsedTimeLettersIncongruent";
-    public static final String COLUMN_ERROR_EMOTIONCONGRUENT = "errorEmotionCongruent";
-    public static final String COLUMN_ERROR_EMOTIONINCONGRUENT = "errorEmotionIncongruent";
-    public static final String COLUMN_ELAPSED_TIME_EMOTIONCONGRUENT = "elapsedTimeEmotionCongruent";
-    public static final String COLUMN_ELAPSED_TIME_EMOTIONINCONGRUENT = "elapsedTimeEmotionIncongruent";
-    public static final String TABLE_NAME = "Results";
+        public static final String COLUMN_ID = "_id";
+        public static final String COLUMN_GENDER = "gender";
+        public static final String COLUMN_AGE = "age";
+        public static final String COLUMN_ERROR_LETTERSCONGRUENT = "errorLettersCongruent";
+        public static final String COLUMN_ERROR_LETTERSINCONGRUENT = "errorLettersIncongruent";
+        public static final String COLUMN_ELAPSED_TIME_LETTERSCONGRUENT = "elapsedTimeLettersCongruent";
+        public static final String COLUMN_ELAPSED_TIME_LETTERSINCONGRUENT = "elapsedTimeLettersIncongruent";
+        public static final String COLUMN_ERROR_EMOTIONCONGRUENT = "errorEmotionCongruent";
+        public static final String COLUMN_ERROR_EMOTIONINCONGRUENT = "errorEmotionIncongruent";
+        public static final String COLUMN_ELAPSED_TIME_EMOTIONCONGRUENT = "elapsedTimeEmotionCongruent";
+        public static final String COLUMN_ELAPSED_TIME_EMOTIONINCONGRUENT = "elapsedTimeEmotionIncongruent";
+        public static final String TABLE_NAME = "Results";
 
     private static final String DATABASE_NAME = "helloworld.db";
     private static final int DATABASE_VERSION = 2;

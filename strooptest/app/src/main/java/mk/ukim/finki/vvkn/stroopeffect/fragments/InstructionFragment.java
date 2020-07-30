@@ -25,30 +25,75 @@ import com.makeramen.roundedimageview.RoundedImageView;
 
 
 public class InstructionFragment extends Fragment {
-
+    public static final String MODE = "mode";
     public static final String GENDER = "male or female";
     public static final String AGE = "age";
     public static String gender = "male";
     public static String age = "20";
+    public static String inst_mode = "000";
     private TextView textViewInstruction;
     private Button nextButton;
     private RoundedImageView[] imgViewsArray;
     private static final int [] COLOR_BACKGROUNDS = { R.drawable.color_red, R.drawable.color_blue,
             R.drawable.color_yellow, R.drawable.color_pink };
 
-    public static final int LETTERSNEUTRALWORD = 0;
-    public static final int LETTERSNEUTRALCOLOR = 1;
-    public static final int LETTERSCONGRUENT = 2;
-    public static final int LETTERSINCONGRUENT = 3;
-    public static final int EMOTIONNEUTRALWORD = 4;
-    public static final int EMOTIONNEUTRALCOLOR = 5;
-    public static final int EMOTIONCONGRUENT = 6;
-    public static final int EMOTIONINCONGRUENT= 7;
+//    public static final int LETTERSNEUTRALWORD = 0;
+//    public static final int LETTERSNEUTRALCOLOR = 1;
+//    public static final int LETTERSCONGRUENT = 2;
+//    public static final int LETTERSINCONGRUENT = 3;
+//    public static final int EMOTIONNEUTRALWORD = 4;
+//    public static final int EMOTIONNEUTRALCOLOR = 5;
+//    public static final int EMOTIONCONGRUENT = 6;
+//    public static final int EMOTIONINCONGRUENT= 7;
 
-    public static int mSimulationType = LETTERSNEUTRALWORD-1;
+//    public static int mSimulationType = 0;
 
     public InstructionFragment(){
         imgViewsArray = new RoundedImageView[4];
+    }
+
+    public void setInstructions(){
+        if (inst_mode == "" + MainActivity.MODES[0][0] + MainActivity.MODES[0][1] + MainActivity.MODES[0][2] ) {
+            // Practice Round 1 Neutral
+            SimulationFragment.currentResult = new Result();
+            textViewInstruction.setText("PRACTICE ROUND\nPlease select the color that corresponds to the word. I.e. if the word is 'BLUE', the correct option is blue color as shown below.");
+        }
+        else if (inst_mode == "" + MainActivity.MODES[1][0] + MainActivity.MODES[1][1] + MainActivity.MODES[1][2] ) {
+            // Practice Round 2 Mixed
+            textViewInstruction.setText("PRACTICE ROUND\nPlease select the color that corresponds to the COLOR of the word. I.e. if the word is blue in color, the correct option is blue color as shown below.");
+        }
+        else if (inst_mode == "" + MainActivity.MODES[2][0] + MainActivity.MODES[2][1] + MainActivity.MODES[2][2] ) {
+            // Actual Round 1 Congruent/Incongruent
+            textViewInstruction.setText("ACTUAL ROUND\nPlease select the color that corresponds to the COLOR of the FIRST and LAST characters. I.e. if the FIRST and LAST characters are blue in color, the correct option is blue color as shown below.");
+        }
+        else if (inst_mode == "" + MainActivity.MODES[3][0] + MainActivity.MODES[3][1] + MainActivity.MODES[3][2] ) {
+            // Actual Round 2 Congruent/Incongruent
+            textViewInstruction.setText("ACTUAL ROUND\nPlease select the color that corresponds to the COLOR of the FIRST and LAST characters. I.e. if the FIRST and LAST characters are blue in color, the correct option is blue color as shown below.");
+        }
+        else if (inst_mode == "" + MainActivity.MODES[4][0] + MainActivity.MODES[4][1] + MainActivity.MODES[4][2] ) {
+            // Actual Round 3 Mixed
+            textViewInstruction.setText("ACTUAL ROUND\nPlease select the color that corresponds to the EMOTION.\n Here are the emotions associated with the color:\n ANGER - RED\nSAD - BLUE\nLOVE - PINK\nHAPPY - YELLOW");
+        }
+        else if (inst_mode == "" + MainActivity.MODES[5][0] + MainActivity.MODES[5][1] + MainActivity.MODES[5][2] ) {
+            // Practice Round 1 Neutral
+            textViewInstruction.setText("PRACTICE ROUND\nPlease select the color that corresponds to the COLOR of the word. I.e. if the word is blue in color, the correct option is blue color as shown below.");
+        }
+        else if (inst_mode == "" + MainActivity.MODES[6][0] + MainActivity.MODES[6][1] + MainActivity.MODES[6][2] ) {
+            // Practice Round 2 Mixed
+            textViewInstruction.setText("PRACTICE ROUND\nPlease select the color that corresponds to the EMOTION. Here are the emotions associated with the color:\n ANGER - RED\nSAD - BLUE\nLOVE - PINK\nHAPPY - YELLOW");
+        }
+        else if (inst_mode == "" + MainActivity.MODES[7][0] + MainActivity.MODES[7][1] + MainActivity.MODES[7][2] ) {
+            // Actual Round 1 Congruent/Incongruent
+            textViewInstruction.setText("ACTUAL ROUND\nPlease select the color that corresponds to the EMOTION. Here are the emotions associated with the color:\n ANGER - RED\nSAD - BLUE\nLOVE - PINK\nHAPPY - YELLOW");
+        }
+        else if (inst_mode == "" + MainActivity.MODES[8][0] + MainActivity.MODES[8][1] + MainActivity.MODES[8][2] ) {
+            // Actual Round 2 Congruent/Incongruent
+            textViewInstruction.setText("ACTUAL ROUND\nPlease select the color that corresponds to the EMOTION. Here are the emotions associated with the color:\n ANGER - RED\nSAD - BLUE\nLOVE - PINK\nHAPPY - YELLOW");
+        }
+        else if (inst_mode == "" + MainActivity.MODES[9][0] + MainActivity.MODES[9][1] + MainActivity.MODES[9][2] ) {
+            // Actual Round 3 Mixed
+            textViewInstruction.setText("ACTUAL ROUND\nPlease select the color that corresponds to the EMOTION. Here are the emotions associated with the color:\n ANGER - RED\nSAD - BLUE\nLOVE - PINK\nHAPPY - YELLOW");
+        }
     }
 
     @Override
@@ -76,52 +121,21 @@ public class InstructionFragment extends Fragment {
         imgViewsArray[1].setImageDrawable(getResources().getDrawable(COLOR_BACKGROUNDS[1]));
         imgViewsArray[2].setImageDrawable(getResources().getDrawable(COLOR_BACKGROUNDS[2]));
         imgViewsArray[3].setImageDrawable(getResources().getDrawable(COLOR_BACKGROUNDS[3]));
-        mSimulationType++;
-        if (mSimulationType == LETTERSNEUTRALWORD) {
-            SimulationFragment.currentResult = new Result();
-            gender = getArguments().getString(GENDER);
-            age = getArguments().getString(AGE);
-            SimulationFragment.currentResult.setGender(gender);
-            SimulationFragment.currentResult.setAge(age);
-            textViewInstruction.setText("FAMILIARIZATION ROUND\nPlease select the color that corresponds to the word. I.e. if the word is 'BLUE', the correct option is blue color as shown below.");
-        }
-        else if (mSimulationType == LETTERSNEUTRALCOLOR)
-        {
-            textViewInstruction.setText("FAMILIARIZATION ROUND\nPlease select the color that corresponds to the COLOR of the word. I.e. if the word is blue in color, the correct option is blue color as shown below.");
-        }
-        else if (mSimulationType == LETTERSCONGRUENT)
-        {
-            textViewInstruction.setText("ACTUAL ROUND\nPlease select the color that corresponds to the COLOR of the FIRST and LAST characters. I.e. if the FIRST and LAST characters are blue in color, the correct option is blue color as shown below.");
-        }
-        else if (mSimulationType == LETTERSINCONGRUENT)
-        {
-            textViewInstruction.setText("ACTUAL ROUND\nPlease select the color that corresponds to the COLOR of the FIRST and LAST characters. I.e. if the FIRST and LAST characters are blue in color, the correct option is blue color as shown below.");
-        }
-        else if (mSimulationType == EMOTIONNEUTRALWORD)
-        {
-            textViewInstruction.setText("FAMILIARIZATION ROUND\nPlease select the color that corresponds to the EMOTION.\n Here are the emotions associated with the color:\n ANGER - RED\nSAD - BLUE\nLOVE - PINK\nHAPPY - YELLOW");
-        }
-        else if (mSimulationType == EMOTIONNEUTRALCOLOR)
-        {
-            textViewInstruction.setText("FAMILIARIZATION ROUND\nPlease select the color that corresponds to the COLOR of the word. I.e. if the word is blue in color, the correct option is blue color as shown below.");
-        }
-        else if (mSimulationType == EMOTIONCONGRUENT)
-        {
-            textViewInstruction.setText("ACTUAL ROUND\nPlease select the color that corresponds to the EMOTION. Here are the emotions associated with the color:\n ANGER - RED\nSAD - BLUE\nLOVE - PINK\nHAPPY - YELLOW");
-        }
-        else if (mSimulationType == EMOTIONINCONGRUENT)
-        {
-            textViewInstruction.setText("ACTUAL ROUND\nPlease select the color that corresponds to the EMOTION. Here are the emotions associated with the color:\n ANGER - RED\nSAD - BLUE\nLOVE - PINK\nHAPPY - YELLOW");
-        }
 
+//        mSimulationType++;
+        gender = getArguments().getString(GENDER);
+        age = getArguments().getString(AGE);
+        inst_mode = getArguments().getString(MODE);
+        SimulationFragment.currentResult.setGender(gender);
+        SimulationFragment.currentResult.setAge(age);
+        setInstructions();
         return view;
     }
 
     private void processClick()
     {
-        ((MainActivity)getActivity()).startSimulationFragment(gender,mSimulationType);
+        ((MainActivity)getActivity()).startSimulationFragment(gender,inst_mode);
     }
-
 
     @Override
     public void onPause() {

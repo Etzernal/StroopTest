@@ -40,27 +40,60 @@ public class ResultsAdapter extends ArrayAdapter<Result> {
 
         Result result = results.get(position);
 
-        TextView txtViewLettersCongruentError = (TextView) v.findViewById(R.id.results_fragment_letters_error_congruent);
-        TextView txtViewLettersCongruentTime = (TextView) v.findViewById(R.id.results_fragment_letters_time_congruent);
-        TextView txtViewLettersIncongruentError = (TextView) v.findViewById(R.id.results_fragment_letters_error_incongruent);
-        TextView txtViewLettersIncongruentTime = (TextView) v.findViewById(R.id.results_fragment_letters_time_incongruent);
 
-        TextView txtViewEmotionCongruentError = (TextView) v.findViewById(R.id.results_fragment_emotion_error_congruent);
-        TextView txtViewEmotionCongruentTime = (TextView) v.findViewById(R.id.results_fragment_emotion_time_congruent);
-        TextView txtViewEmotionIncongruentError = (TextView) v.findViewById(R.id.results_fragment_emotion_error_incongruent);
-        TextView txtViewEmotionIncongruentTime = (TextView) v.findViewById(R.id.results_fragment_emotion_time_incongruent);
+        TextView txtViewErrorWarpedPracNeutral = (TextView) v.findViewById(R.id.results_fragment_error_warpedpracneutral);
+        TextView txtViewTimeWarpedPracNeutral = (TextView) v.findViewById(R.id.results_fragment_time_warpedpracneutral);
+        TextView txtViewErrorWarpedPracMixed = (TextView) v.findViewById(R.id.results_fragment_error_warpedpracmixed);
+        TextView txtViewTimeWarpedPracMixed = (TextView) v.findViewById(R.id.results_fragment_time_warpedpracmixed);
+        TextView txtViewErrorWarpedCongruent = (TextView) v.findViewById(R.id.results_fragment_error_warpedcongruent);
+        TextView txtViewTimeWarpedCongruent = (TextView) v.findViewById(R.id.results_fragment_time_warpedcongruent);
+        TextView txtViewErrorWarpedIncongruent = (TextView) v.findViewById(R.id.results_fragment_error_warpedincongruent);
+        TextView txtViewTimeWarpedIncongruent = (TextView) v.findViewById(R.id.results_fragment_time_warpedincongruent);
+        TextView txtViewErrorWarpedMixed = (TextView) v.findViewById(R.id.results_fragment_error_warpedmixed);
+        TextView txtViewTimeWarpedMixed = (TextView) v.findViewById(R.id.results_fragment_time_warpedmixed);
+
+        TextView txtViewErrorEmotionPracNeutral = (TextView) v.findViewById(R.id.results_fragment_error_emotionpracneutral);
+        TextView txtViewTimeEmotionPracNeutral = (TextView) v.findViewById(R.id.results_fragment_time_emotionpracneutral);
+        TextView txtViewErrorEmotionPracMixed = (TextView) v.findViewById(R.id.results_fragment_error_emotionpracmixed);
+        TextView txtViewTimeEmotionPracMixed = (TextView) v.findViewById(R.id.results_fragment_time_emotionpracmixed);
+        TextView txtViewErrorEmotionCongruent = (TextView) v.findViewById(R.id.results_fragment_error_emotioncongruent);
+        TextView txtViewTimeEmotionCongruent = (TextView) v.findViewById(R.id.results_fragment_time_emotioncongruent);
+        TextView txtViewErrorEmotionIncongruent = (TextView) v.findViewById(R.id.results_fragment_error_emotionincongruent);
+        TextView txtViewTimeEmotionIncongruent = (TextView) v.findViewById(R.id.results_fragment_time_emotionincongruent);
+        TextView txtViewErrorEmotionMixed = (TextView) v.findViewById(R.id.results_fragment_error_emotionmixed);
+        TextView txtViewTimeEmotionMixed = (TextView) v.findViewById(R.id.results_fragment_time_emotionmixed);
 
         TextView participantInfo = (TextView) v.findViewById(R.id.participantInfo);
 
-        txtViewLettersCongruentError.setText("Error%: " + String.format("%.2f", result.getErrorPercentageLettersCongruent()));
-        txtViewLettersCongruentTime.setText("Response time (ms): " + result.getElapsedTimeLettersCongruent());
-        txtViewLettersIncongruentError.setText("Error%: " + String.format("%.2f", result.getErrorPercentageLettersIncongruent()));
-        txtViewLettersIncongruentTime.setText("Response time (ms): " + result.getElapsedTimeLettersIncongruent());
+        txtViewErrorWarpedPracNeutral.setText("Error%: " + String.format("%.2f", result.getErrorPercentageWarpedPracNeutral()));
+        txtViewTimeWarpedPracNeutral.setText("Response time (ms): " + result.getElapsedTimeWarpedPracNetural());
 
-        txtViewEmotionCongruentError.setText("Error%: " + String.format("%.2f", result.getErrorPercentageEmotionCongruent()));
-        txtViewEmotionCongruentTime.setText("Response time (ms): " + result.getElapsedTimeEmotionCongruent());
-        txtViewEmotionIncongruentError.setText("Error%: " + String.format("%.2f", result.getErrorPercentageEmotionIncongruent()));
-        txtViewEmotionIncongruentTime.setText("Response time (ms): " + result.getElapsedTimeEmotionIncongruent());
+        txtViewErrorWarpedPracMixed.setText("Error%: " + String.format("%.2f", result.getErrorPercentageWarpedPracMixed()));
+        txtViewTimeWarpedPracMixed.setText("Response time (ms): " + result.getElapsedTimeWarpedPracMixed());
+
+        txtViewErrorWarpedCongruent.setText("Error%: " + String.format("%.2f", result.getErrorPercentageWarpedCongruent()));
+        txtViewTimeWarpedCongruent.setText("Response time (ms): " + result.getElapsedTimeWarpedCongruent());
+
+        txtViewErrorWarpedIncongruent.setText("Error%: " + String.format("%.2f", result.getErrorPercentageWarpedIncongruent()));
+        txtViewTimeWarpedIncongruent.setText("Response time (ms): " + result.getElapsedTimeWarpedIncongruent());
+
+        txtViewErrorWarpedMixed.setText("Error%: " + String.format("%.2f", result.getErrorPercentageWarpedMixed()));
+        txtViewTimeWarpedMixed.setText("Response time (ms): " + result.getElapsedTimeWarpedMixed());
+
+        txtViewErrorEmotionPracNeutral.setText("Error%: " + String.format("%.2f", result.getErrorPercentageEmotionPracNeutral()));
+        txtViewTimeEmotionPracNeutral.setText("Response time (ms): " + result.getElapsedTimeEmotionPracNeutral());
+
+        txtViewErrorEmotionPracMixed.setText("Error%: " + String.format("%.2f", result.getErrorPercentageEmotionPracMixed()));
+        txtViewTimeEmotionPracMixed.setText("Response time (ms): " + result.getElapsedTimeEmotionPracMixed());
+
+        txtViewErrorEmotionCongruent.setText("Error%: " + String.format("%.2f", result.getErrorPercentageEmotionCongruent()));
+        txtViewTimeEmotionCongruent.setText("Response time (ms): " + result.getElapsedTimeEmotionCongruent());
+
+        txtViewErrorEmotionIncongruent.setText("Error%: " + String.format("%.2f", result.getErrorPercentageEmotionIncongruent()));
+        txtViewTimeEmotionIncongruent.setText("Response time (ms): " + result.getElapsedTimeEmotionIncongruent());
+
+        txtViewErrorEmotionMixed.setText("Error%: " + String.format("%.2f", result.getErrorPercentageEmotionMixed()));
+        txtViewTimeEmotionMixed.setText("Response time (ms): " + result.getElapsedTimeEmotionMixed());
 
         participantInfo.setText(String.format("Gender: %s ,Age: %s",result.getGender(),result.getAge()));
 
@@ -73,7 +106,6 @@ public class ResultsAdapter extends ArrayAdapter<Result> {
         {
             containerLayout.setBackgroundColor(getContext().getResources().getColor(R.color.row_striping_even));
         }
-
         return v;
     }
 }

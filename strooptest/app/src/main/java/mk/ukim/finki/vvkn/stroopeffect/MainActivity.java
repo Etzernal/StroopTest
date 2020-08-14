@@ -10,6 +10,7 @@ import android.view.MenuItem;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import mk.ukim.finki.vvkn.stroopeffect.db.ResultsDao;
@@ -47,9 +48,9 @@ public class MainActivity extends AppCompatActivity {
 
     // 0,0,0 ; 0,0,3 ; 0,1,1 ; 0,1,2 ; 0,1,3 ;
     // 1,0,0 ; 1,0,3 ; 1,1,1 ; 1,1,2 ; 1,1,3
-//    public static int STROOP_MODE;
-//    public static int TRIALSSET_MODE;
-//    public static int TRIAL_MODE;
+//    public static int STROOP_MODE; warped or emotions
+//    public static int TRIALSSET_MODE; prac or actual
+//    public static int TRIAL_MODE; congruent, neutral or mixed
 
     public static int mode = 0;
     public static int[][] MODES = new int[10][3];
@@ -59,18 +60,18 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        player = MediaPlayer.create(getApplicationContext(), R.raw.background_music);
-        player.setLooping(true);
+        //player = MediaPlayer.create(getApplicationContext(), R.raw.background_music);
+        //player.setLooping(true);
         dao = new ResultsDao(getApplicationContext());
         results = new ArrayList<>();
+        initModes();
         initHomeFragment();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        player.start();
+        //player.start();
         try {
             dao.open();
         } catch (SQLException e) {
@@ -81,14 +82,14 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        player.pause();
+        //player.pause();
         dao.close();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        player.stop();
+        //player.stop();
     }
 
     @Override
@@ -105,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
         // randomly select stroop mode first
         // randomly select congruent or incongruent first
         int stroop_mode = rando.nextInt(2);
-        int trial_mode = rando.nextInt(2);
+        int trial_mode = rando.nextInt(2)+1;
         // 0,0,0 ; 0,0,3 ; 0,1,1 ; 0,1,2 ; 0,1,3 ;
         // 1,0,0 ; 1,0,3 ; 1,1,1 ; 1,1,2 ; 1,1,3
 
@@ -146,16 +147,18 @@ public class MainActivity extends AppCompatActivity {
 
                 MODES[2][2] = trial_mode;
                 MODES[7][2] = trial_mode;
-                if (trial_mode == 0){
+                if (trial_mode == 1){
+                    MODES[3][2] = 2;
+                    MODES[8][2] = 2;
+                }
+                else{
                     MODES[3][2] = 1;
                     MODES[8][2] = 1;
                 }
-                else{
-                    MODES[3][2] = 0;
-                    MODES[8][2] = 0;
-                }
             }
         }
+
+        System.out.println(Arrays.deepToString(MODES));
     }
 
     public void initHomeFragment()
@@ -170,7 +173,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void startHomeFragment()
     {
-        initModes();
         Fragment home = new HomeFragment();
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         // Switch to homepage
@@ -180,16 +182,14 @@ public class MainActivity extends AppCompatActivity {
 
     public void startInstructionFragment(String gender, String age)
     {
-        String modes = "" + MODES[mode][0] + MODES[mode][1] + MODES[mode][2];
 
+//        String modes = "" + MODES[mode][0] + MODES[mode][1] + MODES[mode][2];
         Fragment instructionFragment = new InstructionFragment();
         Bundle arguments = new Bundle();
         arguments.putString(InstructionFragment.GENDER, gender);
         arguments.putString(InstructionFragment.AGE, age);
-        arguments.putString(InstructionFragment.MODE, modes);
+        arguments.putInt(InstructionFragment.MODE, mode);
         instructionFragment.setArguments(arguments);
-
-        mode += 1;
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         // Switch to instructions page
@@ -205,6 +205,8 @@ public class MainActivity extends AppCompatActivity {
         arguments.putString(SimulationFragment.GENDER, gender);
         arguments.putString(SimulationFragment.MODE, simulationMode);
         simulateTest.setArguments(arguments);
+
+//        System.out.println(Arrays.deepToString(MODES));
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         // Switch to quiz page

@@ -18,7 +18,7 @@
                 android:layout_height="wrap_content">
 
                 <TextView
-                    android:id="@+id/results_fragment_letters_error_congruent"
+                    android:id="@+id/results_fragment_error_warpedpracneutral"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/text_view_default"
@@ -26,30 +26,7 @@
                     android:textSize="16sp" />
 
                 <TextView
-                    android:id="@+id/results_fragment_letters_time_congruent"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:text="@string/text_view_default"
-                    android:textColor="@android:color/black"
-                    android:textSize="16sp" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:id="@+id/results_fragment_letters_error_incongruent"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/text_view_default"
-                    android:textColor="@android:color/black"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:id="@+id/results_fragment_letters_time_incongruent"
+                    android:id="@+id/results_fragment_time_warpedpracneutral"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
@@ -64,7 +41,7 @@
                 android:layout_height="wrap_content">
 
                 <TextView
-                    android:id="@+id/results_fragment_emotion_error_congruent"
+                    android:id="@+id/results_fragment_error_warpedpracmixed"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/text_view_default"
@@ -72,7 +49,7 @@
                     android:textSize="16sp" />
 
                 <TextView
-                    android:id="@+id/results_fragment_emotion_time_congruent"
+                    android:id="@+id/results_fragment_time_warpedpracmixed"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
@@ -87,7 +64,7 @@
                 android:layout_height="wrap_content">
 
                 <TextView
-                    android:id="@+id/results_fragment_emotion_error_incongruent"
+                    android:id="@+id/results_fragment_error_warpedcongruent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/text_view_default"
@@ -95,7 +72,170 @@
                     android:textSize="16sp" />
 
                 <TextView
-                    android:id="@+id/results_fragment_emotion_time_incongruent"
+                    android:id="@+id/results_fragment_time_warpedcongruent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:text="@string/text_view_default"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/results_fragment_error_warpedincongruent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/text_view_default"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/results_fragment_time_warpedincongruent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:text="@string/text_view_default"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/results_fragment_error_warpedmixed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/text_view_default"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/results_fragment_time_warpedmixed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:text="@string/text_view_default"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/results_fragment_error_emotionpracneutral"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/text_view_default"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/results_fragment_time_emotionpracneutral"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:text="@string/text_view_default"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp" />
+            </RelativeLayout>
+
+
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/results_fragment_error_emotionpracmixed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/text_view_default"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/results_fragment_time_emotionpracmixed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:text="@string/text_view_default"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/results_fragment_error_emotioncongruent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/text_view_default"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/results_fragment_time_emotioncongruent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:text="@string/text_view_default"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/results_fragment_error_emotionincongruent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/text_view_default"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/results_fragment_time_emotionincongruent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:text="@string/text_view_default"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/results_fragment_error_emotionmixed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/text_view_default"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/results_fragment_time_emotionmixed"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"

@@ -228,11 +228,13 @@ public class MainActivity extends AppCompatActivity {
 
     private void readResultsFromDatabase()
     {
+        System.out.println("HIYA");
         results = dao.getAllResults();
     }
 
     public List<Result> getResults()
     {
+
         return results;
     }
 

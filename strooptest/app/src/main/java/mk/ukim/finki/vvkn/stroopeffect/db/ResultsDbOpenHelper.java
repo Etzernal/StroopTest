@@ -35,7 +35,7 @@ public class ResultsDbOpenHelper extends SQLiteOpenHelper {
 
         public static final String TABLE_NAME = "Results";
 
-    private static final String DATABASE_NAME = "tryagain.db";
+    private static final String DATABASE_NAME = "tryagain3.db";
     private static final int DATABASE_VERSION = 2;
 
     private static final String DATABASE_CREATE = String.format("create table %s (" +

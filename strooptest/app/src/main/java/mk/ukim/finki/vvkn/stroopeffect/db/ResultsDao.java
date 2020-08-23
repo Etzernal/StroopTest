@@ -17,7 +17,7 @@ public class ResultsDao  {
     private ResultsDbOpenHelper dbHelper;
     private String [] allColumns = { ResultsDbOpenHelper.COLUMN_ID, ResultsDbOpenHelper.COLUMN_GENDER, ResultsDbOpenHelper.COLUMN_AGE,
             ResultsDbOpenHelper.COLUMN_ERROR_WARPEDPRACNEUTRAL, ResultsDbOpenHelper.COLUMN_TIME_WARPEDPRACNEUTRAL,
-            ResultsDbOpenHelper.COLUMN_ERROR_EMOTIONPRACMIXED, ResultsDbOpenHelper.COLUMN_TIME_WARPEDPRACMIXED,
+            ResultsDbOpenHelper.COLUMN_ERROR_WARPEDPRACMIXED, ResultsDbOpenHelper.COLUMN_TIME_WARPEDPRACMIXED,
             ResultsDbOpenHelper.COLUMN_ERROR_WARPEDCONGRUENT, ResultsDbOpenHelper.COLUMN_TIME_WARPEDCONGRUENT,
             ResultsDbOpenHelper.COLUMN_ERROR_WARPEDINCONGRUENT, ResultsDbOpenHelper.COLUMN_TIME_WARPEDINCONGRUENT,
             ResultsDbOpenHelper.COLUMN_ERROR_WARPEDMIXED, ResultsDbOpenHelper.COLUMN_TIME_WARPEDMIXED,
@@ -66,7 +66,9 @@ public class ResultsDao  {
                 null, null, null, null, null);
 
         if (cursor.moveToFirst()) {
+
             do {
+                System.out.println("HELLO");
                 results.add(cursorToResult(cursor));
             } while (cursor.moveToNext());
         }
@@ -75,6 +77,9 @@ public class ResultsDao  {
     }
 
     protected Result cursorToResult(Cursor cursor) {
+
+
+
         Result result = new Result();
         result.setGender(cursor.getString(cursor.getColumnIndex(ResultsDbOpenHelper.COLUMN_GENDER)));
         result.setAge(cursor.getString(cursor.getColumnIndex(ResultsDbOpenHelper.COLUMN_AGE)));
@@ -163,6 +168,33 @@ public class ResultsDao  {
         System.out.println(r.getErrorPercentageEmotionMixed());
         System.out.println(ResultsDbOpenHelper.COLUMN_TIME_EMOTIONMIXED);
         System.out.println(r.getElapsedTimeEmotionMixed());
+
+        contentValues.put(ResultsDbOpenHelper.COLUMN_GENDER, r.getGender());
+        contentValues.put(ResultsDbOpenHelper.COLUMN_AGE, r.getAge());
+
+        contentValues.put(ResultsDbOpenHelper.COLUMN_ERROR_WARPEDPRACNEUTRAL, r.getErrorPercentageWarpedPracNeutral());
+        contentValues.put(ResultsDbOpenHelper.COLUMN_ERROR_WARPEDPRACMIXED, r.getErrorPercentageWarpedPracMixed());
+        contentValues.put(ResultsDbOpenHelper.COLUMN_ERROR_WARPEDCONGRUENT, r.getErrorPercentageWarpedCongruent());
+        contentValues.put(ResultsDbOpenHelper.COLUMN_ERROR_WARPEDINCONGRUENT, r.getErrorPercentageWarpedIncongruent());
+        contentValues.put(ResultsDbOpenHelper.COLUMN_ERROR_WARPEDMIXED, r.getErrorPercentageWarpedMixed());
+
+        contentValues.put(ResultsDbOpenHelper.COLUMN_TIME_WARPEDPRACNEUTRAL, r.getElapsedTimeWarpedPracNetural());
+        contentValues.put(ResultsDbOpenHelper.COLUMN_TIME_WARPEDPRACMIXED, r.getElapsedTimeWarpedPracMixed());
+        contentValues.put(ResultsDbOpenHelper.COLUMN_TIME_WARPEDCONGRUENT, r.getElapsedTimeWarpedCongruent());
+        contentValues.put(ResultsDbOpenHelper.COLUMN_TIME_WARPEDINCONGRUENT, r.getElapsedTimeWarpedIncongruent());
+        contentValues.put(ResultsDbOpenHelper.COLUMN_TIME_WARPEDMIXED, r.getElapsedTimeWarpedMixed());
+
+        contentValues.put(ResultsDbOpenHelper.COLUMN_ERROR_EMOTIONPRACNEUTRAL, r.getErrorPercentageEmotionPracNeutral());
+        contentValues.put(ResultsDbOpenHelper.COLUMN_ERROR_EMOTIONPRACMIXED, r.getErrorPercentageEmotionPracMixed());
+        contentValues.put(ResultsDbOpenHelper.COLUMN_ERROR_EMOTIONCONGRUENT, r.getErrorPercentageEmotionCongruent());
+        contentValues.put(ResultsDbOpenHelper.COLUMN_ERROR_EMOTIONINCONGRUENT, r.getErrorPercentageEmotionIncongruent());
+        contentValues.put(ResultsDbOpenHelper.COLUMN_ERROR_EMOTIONMIXED, r.getErrorPercentageEmotionMixed());
+
+        contentValues.put(ResultsDbOpenHelper.COLUMN_TIME_EMOTIONPRACNEUTRAL, r.getElapsedTimeEmotionPracNeutral());
+        contentValues.put(ResultsDbOpenHelper.COLUMN_TIME_EMOTIONPRACMIXED, r.getElapsedTimeEmotionPracMixed());
+        contentValues.put(ResultsDbOpenHelper.COLUMN_TIME_EMOTIONCONGRUENT, r.getElapsedTimeEmotionCongruent());
+        contentValues.put(ResultsDbOpenHelper.COLUMN_TIME_EMOTIONINCONGRUENT, r.getElapsedTimeEmotionIncongruent());
+        contentValues.put(ResultsDbOpenHelper.COLUMN_TIME_EMOTIONMIXED, r.getElapsedTimeEmotionMixed());
 
         return contentValues;
     }

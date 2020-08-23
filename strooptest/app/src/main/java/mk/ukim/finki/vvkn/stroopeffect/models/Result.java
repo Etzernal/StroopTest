@@ -166,7 +166,7 @@ public class Result {
         // 2nd column - prac or actual
         // 3rd column - neutral, congruent, incongruent or mixed
 
-        System.out.println("I AM HERE TOO ");
+//        System.out.println("I AM HERE TOO ");
         if (mode.equals("000")) {setElapsedTimeWarpedPracNeutral(milliseconds);}
         else if (mode.equals("003")) {setElapsedTimeWarpedPracMixed(milliseconds);}
         else if (mode.equals("011")) {setElapsedTimeWarpedCongruent(milliseconds);}

@@ -61,7 +61,7 @@ public class SimulationFragment extends Fragment {
     public static final int PRAC_ROUNDS = 2;
     public static final int ACT_ROUNDS = 3;
 
-    public static final int MAX_TRIALS = 16;
+    public static final int MAX_TRIALS = 1; // REMEMBER TO CHANGE THIS BACK
     public static final int TOAST_DURATION = 300;
 
 
@@ -83,6 +83,7 @@ public class SimulationFragment extends Fragment {
     private int mCorrectTrials;
 
     private final StopWatch stopWatch;
+    private final StopWatch qnstopWatch;
     private final Random random;
 
     private TextView textViewQuestion;
@@ -99,6 +100,7 @@ public class SimulationFragment extends Fragment {
     public SimulationFragment() {
         imgViewsArray = new RoundedImageView[4];
         stopWatch = new StopWatch();
+        qnstopWatch = new StopWatch();
         random = new Random();
     }
 
@@ -152,8 +154,10 @@ public class SimulationFragment extends Fragment {
 
     private void processClick(int optionClicked)
     {
+        long qntime = qnstopWatch.getElapsedMilliseconds();
+        qnstopWatch.restart();
         mCurrentTrials++;
-        if (mCorrectAnswer == optionClicked) {
+        if (mCorrectAnswer == optionClicked && qntime <= 4000) {
             mCorrectTrials++;
             if (mCurrentTrials == MAX_TRIALS) {
                 long elapsedTime = stopWatch.getElapsedMilliseconds();
@@ -179,20 +183,26 @@ public class SimulationFragment extends Fragment {
             simulate(mSimulationType);
         }
         else {
-            errorToast.show();
-            Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    errorToast.cancel();
-                }
-            }, TOAST_DURATION);
+            // only show feedback if not actual round
+            if (InstructionFragment.inst_mode.charAt(1) == '0'){
+                errorToast.show();
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        errorToast.cancel();
+                    }
+                }, TOAST_DURATION);
+            }
         }
     }
 
     // Selection of the options.
     private void simulate(String mode)
     {
+        // Start qn stopwatch
+        qnstopWatch.start();
+
         // Randomly select color
         int correctColorId = random.nextInt(COLOR_BACKGROUNDS.length);
         mCorrectAnswer = correctColorId;

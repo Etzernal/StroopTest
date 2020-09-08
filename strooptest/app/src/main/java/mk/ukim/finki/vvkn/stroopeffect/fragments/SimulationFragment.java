@@ -61,9 +61,11 @@ public class SimulationFragment extends Fragment {
     public static final int PRAC_ROUNDS = 2;
     public static final int ACT_ROUNDS = 3;
 
-    public static final int MAX_TRIALS = 1; // REMEMBER TO CHANGE THIS BACK
+
+    public static final int MAX_TRIALS = 16; // REMEMBER TO CHANGE THIS BACK
     public static final int TOAST_DURATION = 300;
 
+    public static int MAX = MAX_TRIALS;
 
     // Colors required - Red, Blue, Pink, Yellow.
 
@@ -115,7 +117,21 @@ public class SimulationFragment extends Fragment {
 
         stopWatch.start();
 
-        simulate(mSimulationType);
+        simulate(mSimulationType);// only show feedback if not actual round
+            if (InstructionFragment.inst_mode.charAt(1) == '0'){
+                errorToast.show();
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        errorToast.cancel();
+                    }
+                }, TOAST_DURATION);
+                System.out.println("PROCESS CLICK: WRONG ANSWER PRACTICE OR TOO SLOW");
+            }
+            else {
+                System.out.println("PROCESS CLICK: WRONG ANSWER ACTUAL OR TOO SLOW");
+            }
 
         for (int i = 0; i < imgViewsArray.length; ++i)
         {
@@ -157,44 +173,66 @@ public class SimulationFragment extends Fragment {
         long qntime = qnstopWatch.getElapsedMilliseconds();
         qnstopWatch.restart();
         mCurrentTrials++;
+        System.out.println(qntime);
         if (mCorrectAnswer == optionClicked && qntime <= 4000) {
-            mCorrectTrials++;
-            if (mCurrentTrials == MAX_TRIALS) {
-                long elapsedTime = stopWatch.getElapsedMilliseconds();
-                System.out.println("MODE: " + InstructionFragment.inst_mode);
-                System.out.println(String.format("Time: %d",elapsedTime));
-                currentResult.setElapsedTime(InstructionFragment.inst_mode, elapsedTime/ MAX_TRIALS);
-                currentResult.setErrorPercentage(InstructionFragment.inst_mode, 100 - 100 * MAX_TRIALS / mCorrectTrials);
-                stopWatch.restart();
-                // Change simulation type
-                //mSimulationType++;
-                if (InstructionFragment.inst_mode.equals("" + MainActivity.MODES[9][0] + MainActivity.MODES[9][1] + MainActivity.MODES[9][2])) {
-                    String message = "Thanks for participating.";
-                    InstructionFragment.inst_mode = "" + MainActivity.MODES[0][0] + MainActivity.MODES[0][1] + MainActivity.MODES[0][2];
-                    Toast.makeText(getActivity().getApplicationContext(), message, Toast.LENGTH_LONG).show();
-                    ((MainActivity)getActivity()).insertResultIntoDatabase(currentResult);
-                    ((MainActivity)getActivity()).startHomeFragment();
-                }
-                else {
-//                    System.out.println(mSimulationType);
-                    ((MainActivity)getActivity()).startInstructionFragment(InstructionFragment.gender,InstructionFragment.age);
-                }
-            }
-            simulate(mSimulationType);
+            checkQuestion();
+            System.out.println("PROCESS CLICK: CORRECT ANSWER");
+        }
+        else if (mCorrectAnswer == optionClicked && qntime > 4000){
+            checkQuestion();
+            displayIncorrect();
         }
         else {
-            // only show feedback if not actual round
-            if (InstructionFragment.inst_mode.charAt(1) == '0'){
-                errorToast.show();
-                Handler handler = new Handler();
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        errorToast.cancel();
-                    }
-                }, TOAST_DURATION);
+            checkQuestion();
+            displayIncorrect();
+        }
+    }
+
+    // Displays toast when answer is wrong/ slow answer in practice mode
+    private void displayIncorrect(){
+        // only show feedback if not actual round
+        if (InstructionFragment.inst_mode.charAt(1) == '0'){
+            errorToast.show();
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    errorToast.cancel();
+                }
+            }, TOAST_DURATION);
+            System.out.println("PROCESS CLICK: WRONG ANSWER PRACTICE OR TOO SLOW");
+        }
+        else {
+            System.out.println("PROCESS CLICK: WRONG ANSWER ACTUAL OR TOO SLOW");
+        }
+    }
+
+    // Check if last question and proceed to next test
+    private void checkQuestion(){
+        mCorrectTrials++;
+        // Check if it is mixed mode
+        if (mCurrentTrials == MAX) {
+            long elapsedTime = stopWatch.getElapsedMilliseconds();
+            //System.out.println("MODE: " + InstructionFragment.inst_mode);
+            //System.out.println(String.format("Time: %d",elapsedTime));
+            currentResult.setElapsedTime(InstructionFragment.inst_mode, elapsedTime/ MAX);
+            currentResult.setErrorPercentage(InstructionFragment.inst_mode, 100 - 100 * MAX / mCorrectTrials);
+            stopWatch.restart();
+            // Change simulation type
+            //mSimulationType++;
+            if (InstructionFragment.inst_mode.equals("" + MainActivity.MODES[9][0] + MainActivity.MODES[9][1] + MainActivity.MODES[9][2])) {
+                String message = "Thanks for participating.";
+                InstructionFragment.inst_mode = "" + MainActivity.MODES[0][0] + MainActivity.MODES[0][1] + MainActivity.MODES[0][2];
+                Toast.makeText(getActivity().getApplicationContext(), message, Toast.LENGTH_LONG).show();
+                ((MainActivity)getActivity()).insertResultIntoDatabase(currentResult);
+                ((MainActivity)getActivity()).startHomeFragment();
+            }
+            else {
+//                    System.out.println(mSimulationType);
+                ((MainActivity)getActivity()).startInstructionFragment(InstructionFragment.gender,InstructionFragment.age);
             }
         }
+        simulate(mSimulationType);
     }
 
     // Selection of the options.
@@ -211,6 +249,7 @@ public class SimulationFragment extends Fragment {
         ///////////////////////////////////////////
         // prac round neutral
         if (mode.equals("" + MainActivity.MODES[0][0] + MainActivity.MODES[0][1] + MainActivity.MODES[0][2])) {
+            MAX = MAX_TRIALS;
 //            System.out.println("PRAC NEUTRAL " + MainActivity.MODES[0][0]);
             textViewInstruction.setText("Select the color that corresponds to the word!");
             textViewQuestion.setTextColor(Color.parseColor(BLACK_CODE));
@@ -220,6 +259,7 @@ public class SimulationFragment extends Fragment {
 
         // prac round mixed
         else if (mode.equals("" + MainActivity.MODES[1][0] + MainActivity.MODES[1][1] + MainActivity.MODES[1][2])) {
+            MAX = MAX_TRIALS;
 //            System.out.println("PRAC MIXED " + MainActivity.MODES[1][0]);
             textViewInstruction.setText("Select the color that corresponds to the color!");
             textViewQuestion.setTextColor(Color.parseColor(BLACK_CODE));
@@ -246,6 +286,7 @@ public class SimulationFragment extends Fragment {
 
         // actual congruent/incongruent
         else if (mode.equals("" + MainActivity.MODES[2][0] + MainActivity.MODES[2][1] + MainActivity.MODES[2][2])) {
+            MAX = MAX_TRIALS;
 //            System.out.println("CONGRUENT " + MainActivity.MODES[2][0]);
             textViewInstruction.setText("Select the color that corresponds to the color!");
             textViewQuestion.setTextColor(Color.parseColor(BLACK_CODE));
@@ -261,6 +302,7 @@ public class SimulationFragment extends Fragment {
 
         // actual incongurent/congruent
         else if (mode.equals("" + MainActivity.MODES[3][0] + MainActivity.MODES[3][1] + MainActivity.MODES[3][2])) {
+            MAX = MAX_TRIALS;
 //            System.out.println("INCONGRUENT " + MainActivity.MODES[3][0]);
             textViewInstruction.setText("Select the color that corresponds to the color!");
             textViewQuestion.setTextColor(Color.parseColor(BLACK_CODE));
@@ -275,6 +317,7 @@ public class SimulationFragment extends Fragment {
 
         // actual mixed
         else if (mode.equals("" + MainActivity.MODES[4][0] + MainActivity.MODES[4][1] + MainActivity.MODES[4][2])) {
+            MAX = MAX_TRIALS*2;
 //            System.out.println("MIXED " + MainActivity.MODES[4][0]);
             textViewInstruction.setText("Select the color that corresponds to the emotion!");
             textViewQuestion.setTextColor(Color.parseColor(BLACK_CODE));
@@ -300,6 +343,7 @@ public class SimulationFragment extends Fragment {
 
         // prac neutral
         else if (mode.equals("" + MainActivity.MODES[5][0] + MainActivity.MODES[5][1] + MainActivity.MODES[5][2])) {
+            MAX = MAX_TRIALS;
 //            System.out.println("PRAC NEUTRAL " + MainActivity.MODES[5][0]);
             textViewInstruction.setText("Select the color that corresponds to the word color!");
             textViewQuestion.setTextColor(Color.parseColor(BLACK_CODE));
@@ -309,6 +353,7 @@ public class SimulationFragment extends Fragment {
 
         // prac mixed
         else if (mode.equals( "" + MainActivity.MODES[6][0] + MainActivity.MODES[6][1] + MainActivity.MODES[6][2])) {
+            MAX = MAX_TRIALS;
 //            System.out.println("PRAC MIXED " + MainActivity.MODES[6][0]);
             textViewInstruction.setText("Select the color that corresponds to the word color!");
             textViewQuestion.setTextColor(Color.parseColor(BLACK_CODE));
@@ -334,6 +379,7 @@ public class SimulationFragment extends Fragment {
 
         // actual incongruent/congruent
         else if (mode.equals("" + MainActivity.MODES[7][0] + MainActivity.MODES[7][1] + MainActivity.MODES[7][2])) {
+            MAX = MAX_TRIALS;
 //            System.out.println("CONGRUENT " + MainActivity.MODES[7][0]);
             textViewInstruction.setText("Select the color that corresponds to the word color!");
             textViewQuestion.setTextColor(Color.parseColor(BLACK_CODE));
@@ -348,6 +394,7 @@ public class SimulationFragment extends Fragment {
 
         // actual congruent/incongruent
         else if (mode.equals("" + MainActivity.MODES[8][0] + MainActivity.MODES[8][1] + MainActivity.MODES[8][2])) {
+            MAX = MAX_TRIALS;
 //            System.out.println("INCONGRUENT " + MainActivity.MODES[8][0]);
             textViewInstruction.setText("Select the color that corresponds to the word color!");
             textViewQuestion.setTextColor(Color.parseColor(BLACK_CODE));
@@ -362,11 +409,16 @@ public class SimulationFragment extends Fragment {
 
         // actual mixed
         else if (mode.equals("" + MainActivity.MODES[9][0] + MainActivity.MODES[9][1] + MainActivity.MODES[9][2])) {
+            MAX = MAX_TRIALS*2;
 //            System.out.println("MIXED " + MainActivity.MODES[9][0]);
             textViewInstruction.setText("Select the color that corresponds to the word color!");
             textViewQuestion.setTextColor(Color.parseColor(BLACK_CODE));
             //need to mix the questions
-            if (mCurrentTrials == 0 || mCurrentTrials == 3 || mCurrentTrials == 4 || mCurrentTrials == 7 || mCurrentTrials == 8 || mCurrentTrials == 9 || mCurrentTrials == 13 || mCurrentTrials == 15){
+            if (mCurrentTrials == 0 || mCurrentTrials == 3 || mCurrentTrials == 4 || mCurrentTrials == 7 ||
+                    mCurrentTrials == 8 || mCurrentTrials == 9 || mCurrentTrials == 13 || mCurrentTrials == 15 ||
+                    mCurrentTrials == 16 || mCurrentTrials == 19 || mCurrentTrials == 20 || mCurrentTrials == 23 ||
+                    mCurrentTrials == 24 || mCurrentTrials == 25 || mCurrentTrials == 29 || mCurrentTrials == 31
+            ){
                 if (MainActivity.MODES[9][0] == WARPED) {
                     setWidgetsLettersCongruent(correctColorId);
                 }

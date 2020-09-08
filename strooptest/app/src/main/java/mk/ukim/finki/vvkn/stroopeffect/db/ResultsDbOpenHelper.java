@@ -5,6 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 public class ResultsDbOpenHelper extends SQLiteOpenHelper {
+
         public static final String COLUMN_ID = "id";
         public static final String COLUMN_GENDER = "gender";
         public static final String COLUMN_AGE = "age";

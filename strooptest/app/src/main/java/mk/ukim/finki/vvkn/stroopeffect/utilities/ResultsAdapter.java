@@ -40,7 +40,6 @@ public class ResultsAdapter extends ArrayAdapter<Result> {
 
         Result result = results.get(position);
 
-
         TextView txtViewErrorWarpedPracNeutral = (TextView) v.findViewById(R.id.results_fragment_error_warpedpracneutral);
         TextView txtViewTimeWarpedPracNeutral = (TextView) v.findViewById(R.id.results_fragment_time_warpedpracneutral);
         TextView txtViewErrorWarpedPracMixed = (TextView) v.findViewById(R.id.results_fragment_error_warpedpracmixed);
@@ -95,7 +94,7 @@ public class ResultsAdapter extends ArrayAdapter<Result> {
         txtViewErrorEmotionMixed.setText("Error%: " + String.format("%.2f", result.getErrorPercentageEmotionMixed()));
         txtViewTimeEmotionMixed.setText("Response time (ms): " + result.getElapsedTimeEmotionMixed());
 
-        participantInfo.setText(String.format("Gender: %s ,Age: %s",result.getGender(),result.getAge()));
+        participantInfo.setText(String.format("Gender: %s ,Age: %s, Code: %s",result.getGender(),result.getAge(),result.getCode()));
 
         LinearLayout containerLayout = (LinearLayout)v.findViewById(R.id.results_fragment_layout_container);
         if (position % 2 == 1)

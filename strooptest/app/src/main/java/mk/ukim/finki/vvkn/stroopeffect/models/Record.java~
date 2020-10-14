@@ -1,0 +1,84 @@
+package mk.ukim.finki.vvkn.stroopeffect.models;
+
+
+import java.util.HashMap;
+
+import mk.ukim.finki.vvkn.stroopeffect.db.ResultsFirebase;
+
+public class Record {
+    private Long id;
+//    [gender: m, age: 2000, pracneutral: {}, pracmixed: {}, actualcongruent: {}, actualincongruent: {}, actualmixed: {}]
+//    [1: {}, 2: {} ... 15: {}]
+//    [time: _, result: _]
+//    neutral: {0:{time:1s, correct:true},1: .....}
+//    randomId:{ neutral :{}, mixed : {}, congruent: {}, gender: female, age: 18}
+    public static final String EMOTIONPRACNEUTRAL = "EmotionPracNeutral";
+    public static final String EMOTIONPRACMIXED = "EmotionPracMixed";
+    public static final String EMOTIONACTUALCONGRUENT = "EmotionActualCongruent";
+    public static final String EMOTIONACTUALINCONGRUENT = "EmotionActualIncongruent";
+    public static final String EMOTIONACTUALMIXED = "EmotionActualMixed";
+
+    public static final String WARPEDPRACNEUTRAL = "WarpedPracNeutral";
+    public static final String WARPEDPRACMIXED = "WarpedPracMixed";
+    public static final String WARPEDACTUALCONGRUENT = "WarpedActualCongruent";
+    public static final String WARPEDACTUALINCONGRUENT = "WarpedActualIncongruent";
+    public static final String WARPEDACTUALMIXED = "WarpedActualMixed";
+
+    public static final String TIME = "Time";
+    public static final String CORRECT = "Correct";
+    public static final String AGE = "Age";
+    public static final String GENDER = "Gender";
+    public static final String RESULTS = "Results";
+    public static final String DETAILS = "Details";
+
+
+    private HashMap<String,HashMap> record = new HashMap<>();
+    private HashMap<String,String> details = new HashMap<>();
+    private HashMap<String,HashMap> results = new HashMap<>();
+    private HashMap<String,HashMap> trials = new HashMap<>();
+    private HashMap<String,Double> question = new HashMap<>();
+
+    private ResultsFirebase firebase = new ResultsFirebase();
+
+    public Record() {}
+
+    public void uploadToFirebase(){
+        String code = firebase.storedata(record);
+        return code;
+    }
+
+    public void clearTrials(){
+        trials = new HashMap<>();
+    }
+
+    public void clearAll(){
+        record = new HashMap<>();
+        details = new HashMap<>();
+        results = new HashMap<>();
+        trials = new HashMap<>();
+        question = new HashMap<>();
+    }
+
+    public void updateRecords(){
+        record.put(DETAILS,details);
+        record.put(RESULTS,results);
+    }
+
+    public void updateDetails(String gender, String age){
+        details = new HashMap<>();
+        details.put(AGE,age);
+        details.put(GENDER,gender);
+    }
+
+    public void updateQuestion(int num, double time, double correct){
+        question = new HashMap<>();
+        question.put(TIME,time);
+        question.put(CORRECT,correct);
+        trials.put(Integer.toString(num),question);
+    }
+
+    public void updateTrials(String type){
+        results.put(type,trials);
+    }
+
+}

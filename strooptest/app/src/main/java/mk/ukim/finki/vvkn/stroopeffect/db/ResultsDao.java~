@@ -15,8 +15,7 @@ import mk.ukim.finki.vvkn.stroopeffect.models.Result;
 public class ResultsDao  {
     private SQLiteDatabase database;
     private ResultsDbOpenHelper dbHelper;
-    private String [] allColumns = { ResultsDbOpenHelper.COLUMN_ID, ResultsDbOpenHelper.COLUMN_CODE,
-            ResultsDbOpenHelper.COLUMN_GENDER, ResultsDbOpenHelper.COLUMN_AGE,
+    private String [] allColumns = { ResultsDbOpenHelper.COLUMN_ID, ResultsDbOpenHelper.COLUMN_GENDER, ResultsDbOpenHelper.COLUMN_AGE,
             ResultsDbOpenHelper.COLUMN_ERROR_WARPEDPRACNEUTRAL, ResultsDbOpenHelper.COLUMN_TIME_WARPEDPRACNEUTRAL,
             ResultsDbOpenHelper.COLUMN_ERROR_WARPEDPRACMIXED, ResultsDbOpenHelper.COLUMN_TIME_WARPEDPRACMIXED,
             ResultsDbOpenHelper.COLUMN_ERROR_WARPEDCONGRUENT, ResultsDbOpenHelper.COLUMN_TIME_WARPEDCONGRUENT,
@@ -50,6 +49,7 @@ public class ResultsDao  {
         {
             return false;
         }
+
         long insertedId = database.insert(ResultsDbOpenHelper.TABLE_NAME, null, resultToContentValues(r));
         if (insertedId > 0)
         {
@@ -77,8 +77,10 @@ public class ResultsDao  {
     }
 
     protected Result cursorToResult(Cursor cursor) {
+
+
+
         Result result = new Result();
-        result.setCode(cursor.getString(cursor.getColumnIndex(ResultsDbOpenHelper.COLUMN_CODE)));
         result.setGender(cursor.getString(cursor.getColumnIndex(ResultsDbOpenHelper.COLUMN_GENDER)));
         result.setAge(cursor.getString(cursor.getColumnIndex(ResultsDbOpenHelper.COLUMN_AGE)));
 
@@ -112,8 +114,6 @@ public class ResultsDao  {
     protected ContentValues resultToContentValues(Result r)
     {
         ContentValues contentValues = new ContentValues();
-        System.out.println(ResultsDbOpenHelper.COLUMN_CODE);
-        System.out.println(r.getCode());
         System.out.println(ResultsDbOpenHelper.COLUMN_GENDER);
         System.out.println(r.getGender());
         System.out.println(ResultsDbOpenHelper.COLUMN_AGE);
@@ -169,7 +169,6 @@ public class ResultsDao  {
         System.out.println(ResultsDbOpenHelper.COLUMN_TIME_EMOTIONMIXED);
         System.out.println(r.getElapsedTimeEmotionMixed());
 
-        contentValues.put(ResultsDbOpenHelper.COLUMN_CODE, r.getCode());
         contentValues.put(ResultsDbOpenHelper.COLUMN_GENDER, r.getGender());
         contentValues.put(ResultsDbOpenHelper.COLUMN_AGE, r.getAge());
 

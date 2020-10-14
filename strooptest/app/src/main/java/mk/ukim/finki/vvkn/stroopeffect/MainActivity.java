@@ -14,6 +14,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import mk.ukim.finki.vvkn.stroopeffect.db.ResultsDao;
+import mk.ukim.finki.vvkn.stroopeffect.db.ResultsFirebase;
 import mk.ukim.finki.vvkn.stroopeffect.fragments.HomeFragment;
 import mk.ukim.finki.vvkn.stroopeffect.fragments.ResultsFragment;
 import mk.ukim.finki.vvkn.stroopeffect.fragments.SimulationFragment;
@@ -54,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
 
     public static int mode = 0;
     public static int[][] MODES = new int[10][3];
+    public static ResultsFirebase firebase = new ResultsFirebase();
 
 
     @Override

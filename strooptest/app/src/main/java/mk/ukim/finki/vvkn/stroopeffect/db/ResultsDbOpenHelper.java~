@@ -42,7 +42,7 @@ public class ResultsDbOpenHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_CREATE = String.format("create table %s (" +
                     "%s integer primary key autoincrement, %s text not null, %s text, " +
-                    "%s text, "+
+                    "%s text,"+
                     "%s real, %s integer, %s real, %s integer, " +
                     "%s real, %s integer, %s real, %s integer, " +
                     "%s real, %s integer, %s real, %s integer, " +

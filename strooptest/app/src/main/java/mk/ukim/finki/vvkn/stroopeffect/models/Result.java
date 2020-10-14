@@ -9,7 +9,7 @@ import mk.ukim.finki.vvkn.stroopeffect.fragments.SimulationFragment;
 public class Result {
     // Primary key
     private Long id;
-
+    private String code;
     private String gender;
     private String age;
 
@@ -39,6 +39,8 @@ public class Result {
 
 
     public Result() {}
+
+    public void setCode(String code) {this.code = code;}
 
     public void setId(Long id) {
         this.id = id;
@@ -123,6 +125,8 @@ public class Result {
         this.elapsedTimeEmotionMixed= elapsedTimeEmotionMixed;
     }
 
+    public String getCode() { return code;}
+
     public Long getId() {
         return id;
     }
@@ -196,7 +200,7 @@ public class Result {
 
     @Override
     public String toString() {
-        return String.format("%s\n%.2f %d\n%.2f %d", getGender(),
+        return String.format("%s\n%.2f %d\n%.2f %d", getCode(),getGender(),
                 getErrorPercentageWarpedPracNeutral(),getElapsedTimeWarpedPracNetural(),
                 getErrorPercentageWarpedPracMixed(),getElapsedTimeWarpedPracMixed(),
                 getErrorPercentageWarpedCongruent(), getElapsedTimeWarpedCongruent(),

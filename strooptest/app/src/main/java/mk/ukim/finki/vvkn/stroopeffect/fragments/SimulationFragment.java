@@ -26,6 +26,7 @@ import java.util.Random;
 
 import mk.ukim.finki.vvkn.stroopeffect.MainActivity;
 import mk.ukim.finki.vvkn.stroopeffect.R;
+import mk.ukim.finki.vvkn.stroopeffect.models.Record;
 import mk.ukim.finki.vvkn.stroopeffect.models.Result;
 import mk.ukim.finki.vvkn.stroopeffect.utilities.StopWatch;
 
@@ -33,6 +34,7 @@ public class SimulationFragment extends Fragment {
     public static final String GENDER = "male or female";
     public static final String MODE = "mode";
     public static Result currentResult;
+    public static Record currentRecord = new Record();
 
     public static final int TRIALDURATION = 4000;
 
@@ -118,20 +120,6 @@ public class SimulationFragment extends Fragment {
         stopWatch.start();
 
         simulate(mSimulationType);// only show feedback if not actual round
-            if (InstructionFragment.inst_mode.charAt(1) == '0'){
-                errorToast.show();
-                Handler handler = new Handler();
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        errorToast.cancel();
-                    }
-                }, TOAST_DURATION);
-                System.out.println("PROCESS CLICK: WRONG ANSWER PRACTICE OR TOO SLOW");
-            }
-            else {
-                System.out.println("PROCESS CLICK: WRONG ANSWER ACTUAL OR TOO SLOW");
-            }
 
         for (int i = 0; i < imgViewsArray.length; ++i)
         {
@@ -139,7 +127,7 @@ public class SimulationFragment extends Fragment {
             imgViewsArray[i].setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    processClick(index);
+                    processClick(index,mSimulationType);
                 }
             });
         }
@@ -168,22 +156,28 @@ public class SimulationFragment extends Fragment {
         errorToast.setView(toastView);
     }
 
-    private void processClick(int optionClicked)
+    private void processClick(int optionClicked, String mode)
     {
         long qntime = qnstopWatch.getElapsedMilliseconds();
+
         qnstopWatch.restart();
         mCurrentTrials++;
+
         System.out.println(qntime);
         if (mCorrectAnswer == optionClicked && qntime <= 4000) {
-            checkQuestion();
+            currentRecord.updateQuestion(mCurrentTrials,qntime,1.0);
+            mCorrectTrials++;
+            checkQuestion(mode);
             System.out.println("PROCESS CLICK: CORRECT ANSWER");
         }
         else if (mCorrectAnswer == optionClicked && qntime > 4000){
-            checkQuestion();
+            currentRecord.updateQuestion(mCurrentTrials,qntime,0.0);
+            checkQuestion(mode);
             displayIncorrect();
         }
         else {
-            checkQuestion();
+            currentRecord.updateQuestion(mCurrentTrials,qntime,0.0);
+            checkQuestion(mode);
             displayIncorrect();
         }
     }
@@ -208,27 +202,70 @@ public class SimulationFragment extends Fragment {
     }
 
     // Check if last question and proceed to next test
-    private void checkQuestion(){
-        mCorrectTrials++;
+    private void checkQuestion(String mode){
         // Check if it is mixed mode
         if (mCurrentTrials == MAX) {
             long elapsedTime = stopWatch.getElapsedMilliseconds();
             //System.out.println("MODE: " + InstructionFragment.inst_mode);
             //System.out.println(String.format("Time: %d",elapsedTime));
             currentResult.setElapsedTime(InstructionFragment.inst_mode, elapsedTime/ MAX);
-            currentResult.setErrorPercentage(InstructionFragment.inst_mode, 100 - 100 * MAX / mCorrectTrials);
+            currentResult.setErrorPercentage(InstructionFragment.inst_mode, 100 - 100 * mCorrectTrials / MAX);
             stopWatch.restart();
-            // Change simulation type
-            //mSimulationType++;
+            // prac round neutral warped
+            if (mode.equals("000")) {
+                currentRecord.updateTrials(Record.WARPEDPRACNEUTRAL);
+            }
+            // prac round mixed warped
+            else if (mode.equals("003")) {
+                currentRecord.updateTrials(Record.WARPEDPRACMIXED);
+            }
+            // actual congruent/incongruent
+            else if (mode.equals("011")) {
+                currentRecord.updateTrials(Record.WARPEDACTUALCONGRUENT);
+            }
+            // actual incongurent/congruent
+            else if (mode.equals("012")) {
+                currentRecord.updateTrials(Record.WARPEDACTUALINCONGRUENT);
+            }
+            // actual mixed
+            else if (mode.equals("013")) {
+                currentRecord.updateTrials(Record.WARPEDACTUALMIXED);
+            }
+            // prac neutral
+            else if (mode.equals("100")) {
+                currentRecord.updateTrials(Record.EMOTIONPRACNEUTRAL);
+            }
+            // prac mixed
+            else if (mode.equals("103")) {
+                currentRecord.updateTrials(Record.EMOTIONPRACMIXED);
+            }
+            // actual incongruent/congruent
+            else if (mode.equals("111")) {
+                currentRecord.updateTrials(Record.EMOTIONACTUALCONGRUENT);
+            }
+            // actual congruent/incongruent
+            else if (mode.equals("112")) {
+                currentRecord.updateTrials(Record.EMOTIONACTUALINCONGRUENT);
+            }
+            // actual mixed
+            else if (mode.equals("113")) {
+                currentRecord.updateTrials(Record.EMOTIONACTUALMIXED);
+            }
+            currentRecord.clearTrials();
             if (InstructionFragment.inst_mode.equals("" + MainActivity.MODES[9][0] + MainActivity.MODES[9][1] + MainActivity.MODES[9][2])) {
                 String message = "Thanks for participating.";
+                currentRecord.updateDetails(InstructionFragment.gender,InstructionFragment.age);
+                currentRecord.updateRecords();
+                String code = currentRecord.uploadToFirebase();
+                currentResult.setCode(code);
+                currentRecord.clearAll();
+                MainActivity.mode = 0;
                 InstructionFragment.inst_mode = "" + MainActivity.MODES[0][0] + MainActivity.MODES[0][1] + MainActivity.MODES[0][2];
                 Toast.makeText(getActivity().getApplicationContext(), message, Toast.LENGTH_LONG).show();
                 ((MainActivity)getActivity()).insertResultIntoDatabase(currentResult);
                 ((MainActivity)getActivity()).startHomeFragment();
             }
             else {
-//                    System.out.println(mSimulationType);
                 ((MainActivity)getActivity()).startInstructionFragment(InstructionFragment.gender,InstructionFragment.age);
             }
         }

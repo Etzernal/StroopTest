@@ -10,12 +10,14 @@
     <TextView
         android:id="@+id/simulation_fragment_text_view_instructions"
         android:layout_width="296dp"
-        android:layout_height="262dp"
+        android:layout_height="290dp"
         android:layout_gravity="center|center_horizontal|center_vertical"
+        android:layout_margin="0sp"
         android:foregroundGravity="center_vertical|center|center_horizontal"
         android:gravity="center|center_horizontal|center_vertical"
+        android:padding="0sp"
         android:text="Hello you should look at this! I wanna test what happens when there is a lot of words"
-        android:textSize="20sp"
+        android:textSize="18sp"
         android:textStyle="bold"
         app:fontFamily="serif" />
 
@@ -28,7 +30,7 @@
             android:layout_width="fill_parent"
             android:layout_height="190dp"
             android:gravity="center_horizontal"
-            android:padding="20dp">
+            android:padding="20sp">
 
             <FrameLayout
                 android:id="@+id/simulation_fragment_frame_option1"

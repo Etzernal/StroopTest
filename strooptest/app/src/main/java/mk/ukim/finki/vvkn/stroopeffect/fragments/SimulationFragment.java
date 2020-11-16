@@ -34,7 +34,7 @@ public class SimulationFragment extends Fragment {
     public static final String GENDER = "male or female";
     public static final String MODE = "mode";
     public static Result currentResult;
-    public static Record currentRecord = new Record();
+    public static Record currentRecord;
 
     public static final int TRIALDURATION = 4000;
 
@@ -212,43 +212,43 @@ public class SimulationFragment extends Fragment {
             currentResult.setErrorPercentage(InstructionFragment.inst_mode, 100 - 100 * mCorrectTrials / MAX);
             stopWatch.restart();
             // prac round neutral warped
-            if (mode.equals("000")) {
+            if (InstructionFragment.inst_mode.equals("000")) {
                 currentRecord.updateTrials(Record.WARPEDPRACNEUTRAL);
             }
             // prac round mixed warped
-            else if (mode.equals("003")) {
+            else if (InstructionFragment.inst_mode.equals("003")) {
                 currentRecord.updateTrials(Record.WARPEDPRACMIXED);
             }
             // actual congruent/incongruent
-            else if (mode.equals("011")) {
+            else if (InstructionFragment.inst_mode.equals("011")) {
                 currentRecord.updateTrials(Record.WARPEDACTUALCONGRUENT);
             }
             // actual incongurent/congruent
-            else if (mode.equals("012")) {
+            else if (InstructionFragment.inst_mode.equals("012")) {
                 currentRecord.updateTrials(Record.WARPEDACTUALINCONGRUENT);
             }
             // actual mixed
-            else if (mode.equals("013")) {
+            else if (InstructionFragment.inst_mode.equals("013")) {
                 currentRecord.updateTrials(Record.WARPEDACTUALMIXED);
             }
             // prac neutral
-            else if (mode.equals("100")) {
+            else if (InstructionFragment.inst_mode.equals("100")) {
                 currentRecord.updateTrials(Record.EMOTIONPRACNEUTRAL);
             }
             // prac mixed
-            else if (mode.equals("103")) {
+            else if (InstructionFragment.inst_mode.equals("103")) {
                 currentRecord.updateTrials(Record.EMOTIONPRACMIXED);
             }
             // actual incongruent/congruent
-            else if (mode.equals("111")) {
+            else if (InstructionFragment.inst_mode.equals("111")) {
                 currentRecord.updateTrials(Record.EMOTIONACTUALCONGRUENT);
             }
             // actual congruent/incongruent
-            else if (mode.equals("112")) {
+            else if (InstructionFragment.inst_mode.equals("112")) {
                 currentRecord.updateTrials(Record.EMOTIONACTUALINCONGRUENT);
             }
             // actual mixed
-            else if (mode.equals("113")) {
+            else if (InstructionFragment.inst_mode.equals("113")) {
                 currentRecord.updateTrials(Record.EMOTIONACTUALMIXED);
             }
             currentRecord.clearTrials();
@@ -288,7 +288,7 @@ public class SimulationFragment extends Fragment {
         if (mode.equals("" + MainActivity.MODES[0][0] + MainActivity.MODES[0][1] + MainActivity.MODES[0][2])) {
             MAX = MAX_TRIALS;
 //            System.out.println("PRAC NEUTRAL " + MainActivity.MODES[0][0]);
-            textViewInstruction.setText("Select the color that corresponds to the word!");
+            textViewInstruction.setText("Select the color that corresponds to the astericks color!");
             textViewQuestion.setTextColor(Color.parseColor(BLACK_CODE));
             setWidgetsNeutral(correctColorId);
             setWidgetOptions();
@@ -298,23 +298,30 @@ public class SimulationFragment extends Fragment {
         else if (mode.equals("" + MainActivity.MODES[1][0] + MainActivity.MODES[1][1] + MainActivity.MODES[1][2])) {
             MAX = MAX_TRIALS;
 //            System.out.println("PRAC MIXED " + MainActivity.MODES[1][0]);
-            textViewInstruction.setText("Select the color that corresponds to the color!");
-            textViewQuestion.setTextColor(Color.parseColor(BLACK_CODE));
+
             // check for question number
             if (mCurrentTrials <= 16 && mCurrentTrials > 8){
                 // check for stroop type (emotion/letters)
                 if (MainActivity.MODES[1][0] == WARPED) {
+                    textViewInstruction.setText("Select the color that corresponds to the word color!");
+                    textViewQuestion.setTextColor(Color.parseColor(BLACK_CODE));
                     setWidgetsLettersCongruent(correctColorId);
                 }
                 else {
+                    textViewInstruction.setText("Select the color that corresponds to the word color!");
+                    textViewQuestion.setTextColor(Color.parseColor(BLACK_CODE));
                     setWidgetsEmotionCongruent(correctColorId);
                 }
             }
             else {
                 if (MainActivity.MODES[1][0] == WARPED) {
+                    textViewInstruction.setText("Select the color that corresponds to the word color!");
+                    textViewQuestion.setTextColor(Color.parseColor(BLACK_CODE));
                     setWidgetsLettersIncongruent(correctColorId);
                 }
                 else {
+                    textViewInstruction.setText("Select the color that corresponds to the word color!");
+                    textViewQuestion.setTextColor(Color.parseColor(BLACK_CODE));
                     setWidgetsEmotionIncongruent(correctColorId);
                 }
             }
@@ -325,13 +332,15 @@ public class SimulationFragment extends Fragment {
         else if (mode.equals("" + MainActivity.MODES[2][0] + MainActivity.MODES[2][1] + MainActivity.MODES[2][2])) {
             MAX = MAX_TRIALS;
 //            System.out.println("CONGRUENT " + MainActivity.MODES[2][0]);
-            textViewInstruction.setText("Select the color that corresponds to the color!");
-            textViewQuestion.setTextColor(Color.parseColor(BLACK_CODE));
             // check for stroop type (emotion/letters)
             if (MainActivity.MODES[2][0] == WARPED) {
+                textViewInstruction.setText("Select the color that corresponds to the word color!");
+                textViewQuestion.setTextColor(Color.parseColor(BLACK_CODE));
                 setWidgetsLettersCongruent(correctColorId);
             }
             else {
+                textViewInstruction.setText("Select the color that corresponds to the word color!");
+                textViewQuestion.setTextColor(Color.parseColor(BLACK_CODE));
                 setWidgetsEmotionCongruent(correctColorId);
             }
             setWidgetOptions();
@@ -341,12 +350,14 @@ public class SimulationFragment extends Fragment {
         else if (mode.equals("" + MainActivity.MODES[3][0] + MainActivity.MODES[3][1] + MainActivity.MODES[3][2])) {
             MAX = MAX_TRIALS;
 //            System.out.println("INCONGRUENT " + MainActivity.MODES[3][0]);
-            textViewInstruction.setText("Select the color that corresponds to the color!");
-            textViewQuestion.setTextColor(Color.parseColor(BLACK_CODE));
             if (MainActivity.MODES[3][0] == WARPED) {
+                textViewInstruction.setText("Select the color that corresponds to the word color!");
+                textViewQuestion.setTextColor(Color.parseColor(BLACK_CODE));
                 setWidgetsLettersIncongruent(correctColorId);
             }
             else {
+                textViewInstruction.setText("Select the color that corresponds to the word color!");
+                textViewQuestion.setTextColor(Color.parseColor(BLACK_CODE));
                 setWidgetsEmotionIncongruent(correctColorId);
             }
             setWidgetOptions();;
@@ -356,22 +367,28 @@ public class SimulationFragment extends Fragment {
         else if (mode.equals("" + MainActivity.MODES[4][0] + MainActivity.MODES[4][1] + MainActivity.MODES[4][2])) {
             MAX = MAX_TRIALS*2;
 //            System.out.println("MIXED " + MainActivity.MODES[4][0]);
-            textViewInstruction.setText("Select the color that corresponds to the emotion!");
-            textViewQuestion.setTextColor(Color.parseColor(BLACK_CODE));
             // set congruent questions
             if (mCurrentTrials == 0 || mCurrentTrials == 3 || mCurrentTrials == 4 || mCurrentTrials == 7 || mCurrentTrials == 8 || mCurrentTrials == 9 || mCurrentTrials == 13 || mCurrentTrials == 15){
                 if (MainActivity.MODES[4][0] == WARPED) {
+                    textViewInstruction.setText("Select the color that corresponds to the word color!");
+                    textViewQuestion.setTextColor(Color.parseColor(BLACK_CODE));
                     setWidgetsLettersCongruent(correctColorId);
                 }
                 else {
+                    textViewInstruction.setText("Select the color that corresponds to the word color!");
+                    textViewQuestion.setTextColor(Color.parseColor(BLACK_CODE));
                     setWidgetsEmotionCongruent(correctColorId);
                 }
             }
             else {
                 if (MainActivity.MODES[4][0] == WARPED) {
+                    textViewInstruction.setText("Select the color that corresponds to the word color!");
+                    textViewQuestion.setTextColor(Color.parseColor(BLACK_CODE));
                     setWidgetsLettersIncongruent(correctColorId);
                 }
                 else {
+                    textViewInstruction.setText("Select the color that corresponds to the word color!");
+                    textViewQuestion.setTextColor(Color.parseColor(BLACK_CODE));
                     setWidgetsEmotionIncongruent(correctColorId);
                 }
             }
@@ -382,7 +399,7 @@ public class SimulationFragment extends Fragment {
         else if (mode.equals("" + MainActivity.MODES[5][0] + MainActivity.MODES[5][1] + MainActivity.MODES[5][2])) {
             MAX = MAX_TRIALS;
 //            System.out.println("PRAC NEUTRAL " + MainActivity.MODES[5][0]);
-            textViewInstruction.setText("Select the color that corresponds to the word color!");
+            textViewInstruction.setText("Select the color that corresponds to the astericks color!");
             textViewQuestion.setTextColor(Color.parseColor(BLACK_CODE));
             setWidgetsNeutral(correctColorId);
             setWidgetOptions();;
@@ -392,22 +409,28 @@ public class SimulationFragment extends Fragment {
         else if (mode.equals( "" + MainActivity.MODES[6][0] + MainActivity.MODES[6][1] + MainActivity.MODES[6][2])) {
             MAX = MAX_TRIALS;
 //            System.out.println("PRAC MIXED " + MainActivity.MODES[6][0]);
-            textViewInstruction.setText("Select the color that corresponds to the word color!");
-            textViewQuestion.setTextColor(Color.parseColor(BLACK_CODE));
             if (mCurrentTrials <= 16 && mCurrentTrials > 8){
                 // check for stroop type (emotion/letters)
                 if (MainActivity.MODES[6][0] == WARPED) {
+                    textViewInstruction.setText("Select the color that corresponds to the word color!");
+                    textViewQuestion.setTextColor(Color.parseColor(BLACK_CODE));
                     setWidgetsLettersCongruent(correctColorId);
                 }
                 else {
+                    textViewInstruction.setText("Select the color that corresponds to the word color!");
+                    textViewQuestion.setTextColor(Color.parseColor(BLACK_CODE));
                     setWidgetsEmotionCongruent(correctColorId);
                 }
             }
             else {
                 if (MainActivity.MODES[6][0] == WARPED) {
+                    textViewInstruction.setText("Select the color that corresponds to the word color!");
+                    textViewQuestion.setTextColor(Color.parseColor(BLACK_CODE));
                     setWidgetsLettersIncongruent(correctColorId);
                 }
                 else {
+                    textViewInstruction.setText("Select the color that corresponds to the word color!");
+                    textViewQuestion.setTextColor(Color.parseColor(BLACK_CODE));
                     setWidgetsEmotionIncongruent(correctColorId);
                 }
             }
@@ -418,12 +441,14 @@ public class SimulationFragment extends Fragment {
         else if (mode.equals("" + MainActivity.MODES[7][0] + MainActivity.MODES[7][1] + MainActivity.MODES[7][2])) {
             MAX = MAX_TRIALS;
 //            System.out.println("CONGRUENT " + MainActivity.MODES[7][0]);
-            textViewInstruction.setText("Select the color that corresponds to the word color!");
-            textViewQuestion.setTextColor(Color.parseColor(BLACK_CODE));
             if (MainActivity.MODES[7][0] == WARPED) {
+                textViewInstruction.setText("Select the color that corresponds to the word color!");
+                textViewQuestion.setTextColor(Color.parseColor(BLACK_CODE));
                 setWidgetsLettersCongruent(correctColorId);
             }
             else {
+                textViewInstruction.setText("Select the color that corresponds to the word color!");
+                textViewQuestion.setTextColor(Color.parseColor(BLACK_CODE));
                 setWidgetsEmotionCongruent(correctColorId);
             }
             setWidgetOptions();;
@@ -433,12 +458,14 @@ public class SimulationFragment extends Fragment {
         else if (mode.equals("" + MainActivity.MODES[8][0] + MainActivity.MODES[8][1] + MainActivity.MODES[8][2])) {
             MAX = MAX_TRIALS;
 //            System.out.println("INCONGRUENT " + MainActivity.MODES[8][0]);
-            textViewInstruction.setText("Select the color that corresponds to the word color!");
-            textViewQuestion.setTextColor(Color.parseColor(BLACK_CODE));
             if (MainActivity.MODES[8][0] == WARPED) {
+                textViewInstruction.setText("Select the color that corresponds to the word color!");
+                textViewQuestion.setTextColor(Color.parseColor(BLACK_CODE));
                 setWidgetsLettersIncongruent(correctColorId);
             }
             else {
+                textViewInstruction.setText("Select the color that corresponds to the word color!");
+                textViewQuestion.setTextColor(Color.parseColor(BLACK_CODE));
                 setWidgetsEmotionIncongruent(correctColorId);
             }
             setWidgetOptions();;
@@ -448,8 +475,6 @@ public class SimulationFragment extends Fragment {
         else if (mode.equals("" + MainActivity.MODES[9][0] + MainActivity.MODES[9][1] + MainActivity.MODES[9][2])) {
             MAX = MAX_TRIALS*2;
 //            System.out.println("MIXED " + MainActivity.MODES[9][0]);
-            textViewInstruction.setText("Select the color that corresponds to the word color!");
-            textViewQuestion.setTextColor(Color.parseColor(BLACK_CODE));
             //need to mix the questions
             if (mCurrentTrials == 0 || mCurrentTrials == 3 || mCurrentTrials == 4 || mCurrentTrials == 7 ||
                     mCurrentTrials == 8 || mCurrentTrials == 9 || mCurrentTrials == 13 || mCurrentTrials == 15 ||
@@ -457,17 +482,25 @@ public class SimulationFragment extends Fragment {
                     mCurrentTrials == 24 || mCurrentTrials == 25 || mCurrentTrials == 29 || mCurrentTrials == 31
             ){
                 if (MainActivity.MODES[9][0] == WARPED) {
+                    textViewInstruction.setText("Select the color that corresponds to the word color!");
+                    textViewQuestion.setTextColor(Color.parseColor(BLACK_CODE));
                     setWidgetsLettersCongruent(correctColorId);
                 }
                 else {
+                    textViewInstruction.setText("Select the color that corresponds to the word color!");
+                    textViewQuestion.setTextColor(Color.parseColor(BLACK_CODE));
                     setWidgetsEmotionCongruent(correctColorId);
                 }
             }
             else {
                 if (MainActivity.MODES[9][0] == WARPED) {
+                    textViewInstruction.setText("Select the color that corresponds to the word color!");
+                    textViewQuestion.setTextColor(Color.parseColor(BLACK_CODE));
                     setWidgetsLettersIncongruent(correctColorId);
                 }
                 else {
+                    textViewInstruction.setText("Select the color that corresponds to the word color!");
+                    textViewQuestion.setTextColor(Color.parseColor(BLACK_CODE));
                     setWidgetsEmotionIncongruent(correctColorId);
                 }
             }

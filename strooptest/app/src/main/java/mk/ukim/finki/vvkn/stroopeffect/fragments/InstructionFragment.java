@@ -4,6 +4,8 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import androidx.fragment.app.Fragment;
+
+import android.text.Html;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +20,7 @@ import java.util.Random;
 
 import mk.ukim.finki.vvkn.stroopeffect.MainActivity;
 import mk.ukim.finki.vvkn.stroopeffect.R;
+import mk.ukim.finki.vvkn.stroopeffect.models.Record;
 import mk.ukim.finki.vvkn.stroopeffect.models.Result;
 import mk.ukim.finki.vvkn.stroopeffect.utilities.StopWatch;
 
@@ -44,49 +47,50 @@ public class InstructionFragment extends Fragment {
 
     public void setInstructions(){
         inst_mode = "" + MainActivity.MODES[MainActivity.mode][0]+ MainActivity.MODES[MainActivity.mode][1] + MainActivity.MODES[MainActivity.mode][2];
-        if (inst_mode.equals("" + MainActivity.MODES[0][0] + MainActivity.MODES[0][1] + MainActivity.MODES[0][2])) {
-            // Practice Round 1 Neutral
-            System.out.println("SUCCESS");
+        if (inst_mode.equals(""+ MainActivity.MODES[0][0] + MainActivity.MODES[0][1] + MainActivity.MODES[0][2])){
+            SimulationFragment.currentRecord = new Record();
             SimulationFragment.currentResult = new Result();
             SimulationFragment.currentResult.setGender(gender);
             SimulationFragment.currentResult.setAge(age);
-            textViewInstruction.setText("PRACTICE ROUND\nPlease select the color that corresponds to the word. I.e. if the word is 'BLUE', the correct option is blue color as shown below.");
         }
-        else if (inst_mode.equals("" + MainActivity.MODES[1][0] + MainActivity.MODES[1][1] + MainActivity.MODES[1][2])) {
-            // Practice Round 2 Mixed
-            textViewInstruction.setText("PRACTICE ROUND\nPlease select the color that corresponds to the COLOR of the word. I.e. if the word is blue in color, the correct option is blue color as shown below.");
-        }
-        else if (inst_mode.equals("" + MainActivity.MODES[2][0] + MainActivity.MODES[2][1] + MainActivity.MODES[2][2])) {
-            // Actual Round 1 Congruent/Incongruent
-            textViewInstruction.setText("ACTUAL ROUND\nPlease select the color that corresponds to the COLOR of the FIRST and LAST characters. I.e. if the FIRST and LAST characters are blue in color, the correct option is blue color as shown below.");
-        }
-        else if (inst_mode.equals("" + MainActivity.MODES[3][0] + MainActivity.MODES[3][1] + MainActivity.MODES[3][2])) {
-            // Actual Round 2 Congruent/Incongruent
-            textViewInstruction.setText("ACTUAL ROUND\nPlease select the color that corresponds to the COLOR of the FIRST and LAST characters. I.e. if the FIRST and LAST characters are blue in color, the correct option is blue color as shown below.");
-        }
-        else if (inst_mode.equals("" + MainActivity.MODES[4][0] + MainActivity.MODES[4][1] + MainActivity.MODES[4][2])) {
-            // Actual Round 3 Mixed
-            textViewInstruction.setText("ACTUAL ROUND\nPlease select the color that corresponds to the EMOTION.\n Here are the emotions associated with the color:\n ANGER - RED\nSAD - BLUE\nLOVE - PINK\nHAPPY - YELLOW");
-        }
-        else if (inst_mode.equals("" + MainActivity.MODES[5][0] + MainActivity.MODES[5][1] + MainActivity.MODES[5][2])) {
+        if (inst_mode.equals("000")) {
             // Practice Round 1 Neutral
-            textViewInstruction.setText("PRACTICE ROUND\nPlease select the color that corresponds to the COLOR of the word. I.e. if the word is blue in color, the correct option is blue color as shown below.");
+            textViewInstruction.setText(Html.fromHtml("TRIAL 1.1<br></br>PRACTICE ROUND<br></br><br></br>Please select the color that corresponds to the COLOR of the astericks. I.e. <font color=#0000FF>****</font>. The blue square should be selected."));
         }
-        else if (inst_mode.equals("" + MainActivity.MODES[6][0] + MainActivity.MODES[6][1] + MainActivity.MODES[6][2])) {
+        else if (inst_mode.equals("003")) {
             // Practice Round 2 Mixed
-            textViewInstruction.setText("PRACTICE ROUND\nPlease select the color that corresponds to the EMOTION. Here are the emotions associated with the color:\n ANGER - RED\nSAD - BLUE\nLOVE - PINK\nHAPPY - YELLOW");
+            textViewInstruction.setText(Html.fromHtml("TRIAL 1.2<br></br>PRACTICE ROUND<br></br><br></br>Please select the color that corresponds to the COLOR of the word. I.e. <font color=#0000FF>B</font>LU<font color=#0000FF>E</font>. The blue square should be selected."));
         }
-        else if (inst_mode.equals("" + MainActivity.MODES[7][0] + MainActivity.MODES[7][1] + MainActivity.MODES[7][2])) {
+        else if (inst_mode.equals("011")) {
             // Actual Round 1 Congruent/Incongruent
-            textViewInstruction.setText("ACTUAL ROUND\nPlease select the color that corresponds to the EMOTION. Here are the emotions associated with the color:\n ANGER - RED\nSAD - BLUE\nLOVE - PINK\nHAPPY - YELLOW");
+            textViewInstruction.setText(Html.fromHtml("TRIAL 1.3<br></br>ACTUAL ROUND<br></br><br></br>Please select the color that corresponds to the COLOR of the word. I.e. <font color=#0000FF>B</font>LU<font color=#0000FF>E</font>. The blue square should be selected."));
         }
-        else if (inst_mode.equals("" + MainActivity.MODES[8][0] + MainActivity.MODES[8][1] + MainActivity.MODES[8][2])) {
+        else if (inst_mode.equals("012")) {
             // Actual Round 2 Congruent/Incongruent
-            textViewInstruction.setText("ACTUAL ROUND\nPlease select the color that corresponds to the EMOTION. Here are the emotions associated with the color:\n ANGER - RED\nSAD - BLUE\nLOVE - PINK\nHAPPY - YELLOW");
+            textViewInstruction.setText(Html.fromHtml("TRIAL 1.4<br></br>ACTUAL ROUND<br></br><br></br>Please select the color that corresponds to the COLOR of the word. I.e. <font color=#0000FF>B</font>LU<font color=#0000FF>E</font>. The blue square should be selected."));
         }
-        else if (inst_mode.equals("" + MainActivity.MODES[9][0] + MainActivity.MODES[9][1] + MainActivity.MODES[9][2])) {
+        else if (inst_mode.equals("013")) {
             // Actual Round 3 Mixed
-            textViewInstruction.setText("ACTUAL ROUND\nPlease select the color that corresponds to the EMOTION. Here are the emotions associated with the color:\n ANGER - RED\nSAD - BLUE\nLOVE - PINK\nHAPPY - YELLOW");
+            textViewInstruction.setText(Html.fromHtml("TRIAL 1.5<br></br>ACTUAL ROUND<br></br><br></br>Please select the color that corresponds to the COLOR of the word. I.e. <font color=#0000FF>B</font>LU<font color=#0000FF>E</font>. The blue square should be selected."));
+        }
+        else if (inst_mode.equals("100")) {
+            // Practice Round 1 Neutral
+            textViewInstruction.setText(Html.fromHtml("TRIAL 2.1<br></br>PRACTICE ROUND<br></br><br></br>Please select the color that corresponds to the COLOR of the astericks. I.e. <font color=#0000FF>****</font>. The blue square should be selected."));        }
+        else if (inst_mode.equals("103")) {
+            // Practice Round 2 Mixed
+            textViewInstruction.setText(Html.fromHtml("TRIAL 2.2<br></br>PRACTICE ROUND<br></br><br></br>Please select the color that corresponds to the COLOR. Here are the emotions associated with the color:<br></br><font color=#FF0000>ANGER</font> - <font color=#FF0000>RED</font><br></br><font color=#0000FF>SAD</font> - <font color=#0000FF>BLUE</font><br></br><font color=#FF00FF>LOVE</font> - <font color=#FF00FF>PINK</font><br></br><font color=#FFCC00>HAPPY</font> - <font color=#FFCC00>YELLOW</font>"));
+        }
+        else if (inst_mode.equals("111")) {
+            // Actual Round 1 Congruent/Incongruent
+            textViewInstruction.setText(Html.fromHtml("TRIAL 2.3<br></br>ACTUAL ROUND<br></br><br></br>Please select the color that corresponds to the COLOR. Here are the emotions associated with the color:<br></br><font color=#FF0000>ANGER</font> - <font color=#FF0000>RED</font><br></br><font color=#0000FF>SAD</font> - <font color=#0000FF>BLUE</font><br></br><font color=#FF00FF>LOVE</font> - <font color=#FF00FF>PINK</font><br></br><font color=#FFCC00>HAPPY</font> - <font color=#FFCC00>YELLOW</font>"));
+        }
+        else if (inst_mode.equals("112")) {
+            // Actual Round 2 Congruent/Incongruent
+            textViewInstruction.setText(Html.fromHtml("TRIAL 2.4<br></br>ACTUAL ROUND<br></br><br></br>Please select the color that corresponds to the COLOR. Here are the emotions associated with the color:<br></br><font color=#FF0000>ANGER</font> - <font color=#FF0000>RED</font><br></br><font color=#0000FF>SAD</font> - <font color=#0000FF>BLUE</font><br></br><font color=#FF00FF>LOVE</font> - <font color=#FF00FF>PINK</font><br></br><font color=#FFCC00>HAPPY</font> - <font color=#FFCC00>YELLOW</font>"));
+        }
+        else if (inst_mode.equals("113")) {
+            // Actual Round 3 Mixed
+            textViewInstruction.setText(Html.fromHtml("TRIAL 2.5<br></br>ACTUAL ROUND<br></br><br></br>Please select the color that corresponds to the COLOR. Here are the emotions associated with the color:<br></br><font color=#FF0000>ANGER</font> - <font color=#FF0000>RED</font><br></br><font color=#0000FF>SAD</font> - <font color=#0000FF>BLUE</font><br></br><font color=#FF00FF>LOVE</font> - <font color=#FF00FF>PINK</font><br></br><font color=#FFCC00>HAPPY</font> - <font color=#FFCC00>YELLOW</font>"));
         }
         MainActivity.mode++;
     }
